@@ -1,2 +1,2 @@
-# apacen
-Constraint logic programming langage
+# Apacen
+Constraint logic programming language
