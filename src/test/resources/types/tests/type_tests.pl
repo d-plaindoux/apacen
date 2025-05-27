@@ -68,8 +68,7 @@
 -- ?- assertTrue(type((f:(y:int) -> int)::nil |- f @ Y : int, proof(abstraction,proof(hypothesis),proof(int),subst(no_subst,no_red))), "f:(y:int) -> int |- f @ Y : int").
 
 -- nil |- F @ int : int
--- No solution !?
--- ?- assertTrue(type(nil |- F @ 1 : int, proof(abstraction,proof(hypothesis),proof(int),subst(no_subst,no_red))), "nil |- F @ int : int").
+?- assertTrue(type(nil |- F @ 1 : int, proof(abstraction,proof(arrow,subst(unbound,free),proof(stopped,(((_ : int) :: nil) |- (_ : int)))),proof(int),subst(unbound,free))), "nil |- F @ int : int").
 
 -{
     Left injection
