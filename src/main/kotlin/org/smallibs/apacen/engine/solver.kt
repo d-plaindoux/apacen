@@ -230,9 +230,6 @@ data class Solver(val system: IList<Rule>, val generator: Generator = Generator(
     ): ProofStep? =
         when (rules) {
             is Cons<Rule> -> {
-                if (postponed.size > 20) {
-                    System.exit(0)
-                }
                 if (trace) print(
                     "${" ".repeat(postponed.size)}<${postponed.size}/${generator.currentGeneration()}> Trying selection ${
                         this.normalize(environment).asString()
