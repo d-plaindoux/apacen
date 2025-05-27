@@ -8,6 +8,10 @@ It does not use research results like the Warren abstract machine.
 The first target is the expressivity manipulating data structures
 with operators and constructors quite easily.
 
+## Type system
+
+A first implementation of the [Type System](https://github.com/d-plaindoux/apacen/tree/main/src/main/resources)
+
 ## License
 
 ```text
