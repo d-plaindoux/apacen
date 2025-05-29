@@ -2,7 +2,7 @@ package org.smallibs.apacen.engine.term
 
 import org.smallibs.core.IList
 import org.smallibs.core.IList.Cons
-import org.smallibs.core.IList.Empty
+import org.smallibs.core.IList.Nil
 import org.smallibs.apacen.data.Term
 import org.smallibs.apacen.data.Term.BinOp
 import org.smallibs.apacen.data.Term.Constructor
@@ -20,6 +20,6 @@ object Fresh {
     fun IList<Term>.fresh(generation: Int): IList<Term> =
         when (this) {
             is Cons<Term> -> Cons(head.fresh(generation), tail.fresh(generation))
-            is Empty -> Empty
+            is Nil -> Nil
         }
 }

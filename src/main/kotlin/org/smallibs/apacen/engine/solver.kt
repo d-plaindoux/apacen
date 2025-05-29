@@ -16,7 +16,7 @@ import org.smallibs.apacen.engine.delta.Delta.deltaReduce
 import org.smallibs.apacen.engine.relation.Reducer.reduce
 import org.smallibs.core.IList
 import org.smallibs.core.IList.Cons
-import org.smallibs.core.IList.Empty
+import org.smallibs.core.IList.Nil
 import org.smallibs.core.ILists.filter
 
 data class Proof(val environment: Environment, val deferred: IList<Deferred>)
@@ -50,7 +50,7 @@ data class Solver(val system: IList<Rule>, val generator: Generator = Generator(
     }
 
     fun solve(goals: IList<CompoundTerm>): Proof? =
-        solve(Runtime(goals, Empty, goals.getRules(), Environment(), Empty, false))
+        solve(Runtime(goals, Nil, goals.getRules(), Environment(), Nil, false))
 
     fun backtrack(proof: Proof): Proof? = proof.deferred.backtrack()?.let { (current, deferred) ->
         solve(Runtime(current.goals, current.postponed, current.rules, current.environment, deferred, current.trace))
@@ -161,7 +161,7 @@ data class Solver(val system: IList<Rule>, val generator: Generator = Generator(
                 }
             }
 
-            Empty ->
+            Nil ->
                 when (runtime.postponed) {
                     is Cons<IList<CompoundTerm>> ->
                         solve(
@@ -175,7 +175,7 @@ data class Solver(val system: IList<Rule>, val generator: Generator = Generator(
                             )
                         )
 
-                    Empty -> Proof(runtime.environment, runtime.deferred)
+                    Nil -> Proof(runtime.environment, runtime.deferred)
                 }
         }
     }
@@ -183,7 +183,7 @@ data class Solver(val system: IList<Rule>, val generator: Generator = Generator(
     private fun IList<Deferred>.backtrack(): Pair<Deferred, IList<Deferred>>? =
         when (this) {
             is Cons<Deferred> -> head to tail
-            Empty -> null
+            Nil -> null
         }
 
 //
@@ -197,11 +197,11 @@ data class Solver(val system: IList<Rule>, val generator: Generator = Generator(
             is Cons<CompoundTerm> ->
                 when (head) {
                     is Functor -> getRules(head.name, head.parameters.size)
-                    is Cut -> Empty
-                    is Relation -> Empty
+                    is Cut -> Nil
+                    is Relation -> Nil
                 }
 
-            Empty -> Empty
+            Nil -> Nil
         }
 
     private fun getRules(name: String, arity: Int): IList<Rule> {
@@ -269,7 +269,7 @@ data class Solver(val system: IList<Rule>, val generator: Generator = Generator(
                 }
             }
 
-            Empty -> null
+            Nil -> null
         }
 
     private fun Functor.select(environment: Environment, rule: Rule): Pair<IList<CompoundTerm>, Environment>? =
@@ -286,7 +286,7 @@ data class Solver(val system: IList<Rule>, val generator: Generator = Generator(
                     cut(generation, deferred.tail)
                 }
 
-            Empty ->
-                Empty
+            Nil ->
+                Nil
         }
 }

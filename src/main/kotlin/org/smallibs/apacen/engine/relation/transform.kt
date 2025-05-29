@@ -17,7 +17,7 @@ import org.smallibs.apacen.engine.term.Variables.Direction.RIGHT
 import org.smallibs.apacen.engine.term.Variables.variables
 import org.smallibs.core.IList
 import org.smallibs.core.IList.Cons
-import org.smallibs.core.IList.Empty
+import org.smallibs.core.IList.Nil
 
 object Transformer {
 
@@ -38,7 +38,7 @@ object Transformer {
 
     tailrec fun Relation.transform(path: IList<Direction>): Relation =
         when (path) {
-            Empty -> Relation(comparator, lhd, rhd)
+            Nil -> Relation(comparator, lhd, rhd)
             is Cons<Direction> ->
                 when (rhd) {
                     is BinOp -> {

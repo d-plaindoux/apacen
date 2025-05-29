@@ -8,7 +8,7 @@ import org.smallibs.apacen.data.Declaration.Rule
 import org.smallibs.apacen.engine.term.Fresh.fresh
 import org.smallibs.core.IList
 import org.smallibs.core.IList.Cons
-import org.smallibs.core.IList.Empty
+import org.smallibs.core.IList.Nil
 
 object Fresh {
     fun Rule.fresh(generation: Int): Rule = Rule(head.fresh(generation), tail.fresh(generation))
@@ -25,6 +25,6 @@ object Fresh {
     fun IList<CompoundTerm>.fresh(generation: Int): IList<CompoundTerm> =
         when (this) {
             is Cons<CompoundTerm> -> Cons(head.fresh(generation), tail.fresh(generation))
-            Empty -> Empty
+            Nil -> Nil
         }
 }

@@ -2,8 +2,8 @@
     Term substitution
 }-
 
-subst(T[X:=Y],T,unbound)                                  :- unbound(X),!.
-subst(T[X:=Y],T,unbound)                                  :- unbound(Y),!,equals(X,Y).
+subst(T[X:=Y],R,unbound)                                  :- unbound(X),!,equals(X,Y),equals(T,R).
+subst(T[X:=Y],R,unbound)                                  :- unbound(Y),!,equals(T,R).
 subst(T[X:=Y],R,unbound)                                  :- unbound(T),!,equals(T[X:=Y],R).
 subst(X[X:=Y],Y,subst(X,Y))                               :- bound(X),!.
 

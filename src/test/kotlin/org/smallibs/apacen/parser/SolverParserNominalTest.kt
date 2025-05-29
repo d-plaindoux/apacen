@@ -4,7 +4,7 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.smallibs.core.IList
-import org.smallibs.core.IList.Empty
+import org.smallibs.core.IList.Nil
 import org.smallibs.parsec.io.Reader
 import org.smallibs.apacen.data.CompoundTerm.Comparator.EQ
 import org.smallibs.apacen.data.CompoundTerm.Functor
@@ -159,7 +159,7 @@ class SolverParserNominalTest {
             val result = parser(Reader.string("test()")).fold({ it.value }, { null })
 
             // Then
-            result shouldBe Constructor("test", Empty)
+            result shouldBe Constructor("test", Nil)
         }
 
         @Test
@@ -188,7 +188,7 @@ class SolverParserNominalTest {
             // Then
             result shouldBe Rule(
                 Functor("test", IList.of(BinOp(ADD, Variable("X"), Variable("Y")), NumberLiteral(12.0))),
-                Empty
+                Nil
             )
         }
 

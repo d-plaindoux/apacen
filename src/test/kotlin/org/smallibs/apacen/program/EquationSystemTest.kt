@@ -2,7 +2,7 @@ package org.smallibs.apacen.program
 
 import org.junit.jupiter.api.Test
 import org.smallibs.core.IList
-import org.smallibs.core.IList.Empty
+import org.smallibs.core.IList.Nil
 import org.smallibs.core.ILists.filter
 import org.smallibs.core.ILists.flatMap
 import org.smallibs.core.ILists.map
@@ -36,8 +36,8 @@ class EquationSystemTest {
     fun `should compute the fact0`() {
         // Given
         val system =
-            program()(string(program)).fold({ it.value }, { Empty }).filter { it is Rule }.map { it as Rule }
-        val facts = goal()(string(fact0)).fold({ IList.of(it.value) }, { Empty })
+            program()(string(program)).fold({ it.value }, { Nil }).filter { it is Rule }.map { it as Rule }
+        val facts = goal()(string(fact0)).fold({ IList.of(it.value) }, { Nil })
 
         // When
         val result = Solver(system).solve(facts.flatMap { it.value })
@@ -50,8 +50,8 @@ class EquationSystemTest {
     fun `should compute the fact1`() {
         // Given
         val system =
-            program()(string(program)).fold({ it.value }, { Empty }).filter { it is Rule }.map { it as Rule }
-        val facts = goal()(string(fact1)).fold({ IList.of(it.value) }, { Empty })
+            program()(string(program)).fold({ it.value }, { Nil }).filter { it is Rule }.map { it as Rule }
+        val facts = goal()(string(fact1)).fold({ IList.of(it.value) }, { Nil })
 
         // When
         val result = Solver(system).solve(facts.flatMap { it.value })
@@ -66,8 +66,8 @@ class EquationSystemTest {
     fun `should compute the fact2`() {
         // Given
         val system =
-            program()(string(program)).fold({ it.value }, { Empty }).filter { it is Rule }.map { it as Rule }
-        val facts = goal()(string(fact2)).fold({ IList.of(it.value) }, { Empty })
+            program()(string(program)).fold({ it.value }, { Nil }).filter { it is Rule }.map { it as Rule }
+        val facts = goal()(string(fact2)).fold({ IList.of(it.value) }, { Nil })
 
         // When
         val result = Solver(system).solve(facts.flatMap { it.value })

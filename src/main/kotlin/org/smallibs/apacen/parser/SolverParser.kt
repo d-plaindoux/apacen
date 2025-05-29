@@ -26,7 +26,7 @@ import org.smallibs.apacen.data.Term.NumberLiteral
 import org.smallibs.apacen.data.Term.StringLiteral
 import org.smallibs.apacen.data.Term.Variable
 import org.smallibs.core.IList
-import org.smallibs.core.IList.Empty
+import org.smallibs.core.IList.Nil
 import org.smallibs.parsec.parser.Parser
 import org.smallibs.parsec.parser.alphaNum
 import org.smallibs.parsec.parser.char
@@ -87,7 +87,7 @@ object SolverParser {
         trace(
             skipped(lowerLetter().then(alphaNum().or(charIn('_')).optrep)).map {
                 it.first + it.second.joinToString("")
-            }.satisfy { listOf("min", "max").contains(it).not() },
+            },
             "ident"
         )
 
@@ -121,7 +121,7 @@ object SolverParser {
 
     private fun <A> list(p: Parser<Char, A>, sep: Char = ',', strict: Boolean = false): Parser<Char, IList<A>> =
         p.then(token(sep).thenRight(p).optrep(strict)).opt map {
-            it?.let { IList.from(listOf(it.first) + it.second) } ?: Empty
+            it?.let { IList.from(listOf(it.first) + it.second) } ?: Nil
         }
 
     // Argument
@@ -152,7 +152,7 @@ object SolverParser {
 
     fun function(): Parser<Char, BinOp> =
         trace(
-            (token("min").or(token("max"))).then(
+            (ident().satisfy { it == "min" }.or(ident().satisfy { it == "max" })).then(
                 token('(').thenRight(
                     term().thenLeft(token(',')).then(term()).thenLeft(token(')'))
                 )
@@ -188,7 +188,7 @@ object SolverParser {
     fun constructor(): Parser<Char, Term> =
         trace(
             ident().then(token('(').thenRight(list(term(), strict = true).thenLeft(token(')'))).opt) map {
-                Constructor(it.first, it.second ?: Empty)
+                Constructor(it.first, it.second ?: Nil)
             },
             "constructor"
         )
@@ -215,7 +215,7 @@ object SolverParser {
     fun functor(): Parser<Char, Functor> =
         trace(
             (ident().then(token('(').thenRight(list(term(), strict = true).thenLeft(token(')'))).opt) map {
-                Functor(it.first, it.second ?: Empty)
+                Functor(it.first, it.second ?: Nil)
             }),
             "functor"
         )
@@ -264,7 +264,7 @@ object SolverParser {
         trace(
             functor().then(token(":-").thenRight(list(compound(), strict = true)).opt)
                 .thenLeft(token('.')) map {
-                Rule(it.first, it.second ?: Empty)
+                Rule(it.first, it.second ?: Nil)
             },
             "rule"
         )

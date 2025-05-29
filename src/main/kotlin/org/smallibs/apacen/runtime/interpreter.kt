@@ -9,7 +9,7 @@ import org.smallibs.apacen.engine.Solver
 import org.smallibs.apacen.engine.declaration.Free.free
 import org.smallibs.apacen.engine.term.normalize
 import org.smallibs.core.IList
-import org.smallibs.core.IList.Empty
+import org.smallibs.core.IList.Nil
 import org.smallibs.core.ILists.append
 import org.smallibs.core.ILists.map
 import org.smallibs.core.ILists.reverse
@@ -17,7 +17,7 @@ import java.io.File
 
 data class Interpreter(private val rules: IList<Rule>) {
 
-    constructor() : this(Empty)
+    constructor() : this(Nil)
 
     fun load(file: File): Interpreter =
         println("import file <$file>").let {
@@ -29,7 +29,7 @@ data class Interpreter(private val rules: IList<Rule>) {
         }
 
     fun load(rules: IList<Rule>): Interpreter =
-        process(rules to Empty)
+        process(rules to Nil)
 
     fun process(program: Pair<IList<Rule>, IList<Fact>>): Interpreter {
         val rules = this.rules.append(program.first)

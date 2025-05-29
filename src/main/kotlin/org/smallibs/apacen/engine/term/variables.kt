@@ -1,7 +1,7 @@
 package org.smallibs.apacen.engine.term
 
 import org.smallibs.core.IList
-import org.smallibs.core.IList.Empty
+import org.smallibs.core.IList.Nil
 import org.smallibs.core.ILists.map
 import org.smallibs.apacen.data.Term
 import org.smallibs.apacen.data.Term.BinOp
@@ -43,7 +43,7 @@ object Variables {
                 if (isAnonymous) {
                     emptyMap()
                 } else {
-                    mapOf(this to Empty)
+                    mapOf(this to Nil)
                 }
         }
 }

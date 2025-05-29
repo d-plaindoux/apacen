@@ -2,7 +2,7 @@ package org.smallibs.apacen.program
 
 import org.junit.jupiter.api.Test
 import org.smallibs.core.IList
-import org.smallibs.core.IList.Empty
+import org.smallibs.core.IList.Nil
 import org.smallibs.core.ILists.filter
 import org.smallibs.core.ILists.flatMap
 import org.smallibs.core.ILists.map
@@ -40,8 +40,8 @@ class ProgramTest {
     fun `should compute the esthetical`() {
         // Given
         val system =
-            program()(string(program)).fold({ it.value }, { Empty }).filter { it is Rule }.map { it as Rule }
-        val facts = goal()(string(fact1)).fold({ IList.of(it.value) }, { Empty })
+            program()(string(program)).fold({ it.value }, { Nil }).filter { it is Rule }.map { it as Rule }
+        val facts = goal()(string(fact1)).fold({ IList.of(it.value) }, { Nil })
 
         // When
         val result = Solver(system).solve(facts.flatMap { it.value })
@@ -55,8 +55,8 @@ class ProgramTest {
     fun `should compute the price`() {
         // Given
         val system =
-            program()(string(program)).fold({ it.value }, { Empty }).filter { it is Rule }.map { it as Rule }
-        val facts = goal()(string(fact2)).fold({ IList.of(it.value) }, { Empty })
+            program()(string(program)).fold({ it.value }, { Nil }).filter { it is Rule }.map { it as Rule }
+        val facts = goal()(string(fact2)).fold({ IList.of(it.value) }, { Nil })
 
         // When
         val result = Solver(system).solve(facts.flatMap { it.value })
@@ -70,8 +70,8 @@ class ProgramTest {
     fun `should compute the renovation`() {
         // Given
         val system =
-            program()(string(program)).fold({ it.value }, { Empty }).filter { it is Rule }.map { it as Rule }
-        val facts = goal()(string(fact3)).fold({ IList.of(it.value) }, { Empty })
+            program()(string(program)).fold({ it.value }, { Nil }).filter { it is Rule }.map { it as Rule }
+        val facts = goal()(string(fact3)).fold({ IList.of(it.value) }, { Nil })
 
         // When
         val result = Solver(system).solve(facts.flatMap { it.value })
@@ -85,8 +85,8 @@ class ProgramTest {
     fun `should compute the renovation adaptation`() {
         // Given
         val system =
-            program()(string(program)).fold({ it.value }, { Empty }).filter { it is Rule }.map { it as Rule }
-        val facts = goal()(string(fact4)).fold({ IList.of(it.value) }, { Empty })
+            program()(string(program)).fold({ it.value }, { Nil }).filter { it is Rule }.map { it as Rule }
+        val facts = goal()(string(fact4)).fold({ IList.of(it.value) }, { Nil })
 
         // When
         val result = Solver(system).solve(facts.flatMap { it.value })
@@ -100,8 +100,8 @@ class ProgramTest {
     fun `should compute the renovation adaptation with two adjustments`() {
         // Given
         val system =
-            program()(string(program)).fold({ it.value }, { Empty }).filter { it is Rule }.map { it as Rule }
-        val facts = goal()(string(fact5)).fold({ IList.of(it.value) }, { Empty })
+            program()(string(program)).fold({ it.value }, { Nil }).filter { it is Rule }.map { it as Rule }
+        val facts = goal()(string(fact5)).fold({ IList.of(it.value) }, { Nil })
 
         // When
         val result = Solver(system).solve(facts.flatMap { it.value })

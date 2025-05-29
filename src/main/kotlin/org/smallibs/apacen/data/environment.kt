@@ -4,7 +4,7 @@ import org.smallibs.apacen.data.CompoundTerm.Relation
 import org.smallibs.apacen.data.Term.Variable
 import org.smallibs.core.IList
 
-data class Substitutions(val values: IList<Pair<Variable, Term>> = IList.Empty) {
+data class Substitutions(val values: IList<Pair<Variable, Term>> = IList.Nil) {
     operator fun get(variable: Variable): Term? {
         tailrec fun find(variable: Variable, values: IList<Pair<Variable, Term>>): Term? =
             when (values) {
@@ -15,7 +15,7 @@ data class Substitutions(val values: IList<Pair<Variable, Term>> = IList.Empty) 
                         find(variable, values.tail)
                     }
 
-                IList.Empty -> null
+                IList.Nil -> null
             }
 
         return find(variable, values)

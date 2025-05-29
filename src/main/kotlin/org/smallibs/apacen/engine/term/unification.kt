@@ -8,7 +8,7 @@ import org.smallibs.apacen.data.Term.Variable
 import org.smallibs.apacen.engine.term.Free.free
 import org.smallibs.core.IList
 import org.smallibs.core.IList.Cons
-import org.smallibs.core.IList.Empty
+import org.smallibs.core.IList.Nil
 
 object Unification {
     fun unify(environment: Environment, lhd: IList<Term>, rhd: IList<Term>): Environment? =
@@ -18,12 +18,12 @@ object Unification {
                     unify(it, lhd.tail, rhd.tail)
                 }
 
-                is Empty -> null
+                is Nil -> null
             }
 
-            is Empty -> when (rhd) {
+            is Nil -> when (rhd) {
                 is Cons<Term> -> null
-                is Empty -> environment
+                is Nil -> environment
             }
         }
 
