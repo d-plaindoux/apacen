@@ -9,7 +9,7 @@ import org.smallibs.core.ILists.map
 import org.smallibs.parsec.io.Reader.Companion.string
 import org.smallibs.apacen.data.Declaration.Rule
 import org.smallibs.apacen.data.Term.BinOp
-import org.smallibs.apacen.data.Term.Kind.SUB
+import org.smallibs.apacen.data.Term.BinOpKind.SUB
 import org.smallibs.apacen.data.Term.NumberLiteral
 import org.smallibs.apacen.data.Term.Variable
 import org.smallibs.apacen.engine.Solver

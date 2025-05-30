@@ -171,6 +171,9 @@ type_system(check,Gamma |- A : T,proof(error,Gamma |- A:T)) :-
     !.
 
 type_system(check,Gamma |- A : T,proof(beta,RED,LOG)) :-
-    !,
     beta(T,R,RED),
+    !,
     type_system(Gamma |- A : R,LOG).
+
+type_system(check,Gamma |- A : T,proof(error,Gamma |- A : T)) :-
+    !.

@@ -230,26 +230,23 @@ data class Solver(val system: IList<Rule>, val generator: Generator = Generator(
     ): ProofStep? =
         when (rules) {
             is Cons<Rule> -> {
-                if (trace) print(
-                    "${" ".repeat(postponed.size)}<${postponed.size}/${generator.currentGeneration()}> Trying selection ${
-                        this.normalize(environment).asString()
-                    } with ${rules.head.head.asString()} "
-                )
                 when (val select = this.select(environment, rules.head)) {
                     null -> {
-                        if (trace) println("❌")
                         this.solveHead(trace, goals, postponed, rules.tail, environment)
                     }
 
                     else -> {
                         when (val newEnvironment = reduce(select.second)) {
                             null -> {
-                                if (trace) println("❌")
                                 this.solveHead(trace, goals, postponed, rules.tail, environment)
                             }
 
                             else -> {
-                                if (trace) println("✅")
+                                if (trace) println(
+                                    "${" ".repeat(postponed.size)}<${postponed.size}/${generator.currentGeneration()}> Trying selection ${
+                                        this.normalize(environment).asString()
+                                    } with ${rules.head.head.asString()} ✅"
+                                )
                                 ProofStep(
                                     select.first,
                                     postponed,

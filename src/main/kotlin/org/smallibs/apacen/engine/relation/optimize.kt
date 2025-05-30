@@ -9,8 +9,8 @@ import org.smallibs.apacen.data.CompoundTerm.Comparator.LTE
 import org.smallibs.apacen.data.CompoundTerm.Relation
 import org.smallibs.apacen.data.Term
 import org.smallibs.apacen.data.Term.BinOp
-import org.smallibs.apacen.data.Term.Kind.MAX
-import org.smallibs.apacen.data.Term.Kind.MIN
+import org.smallibs.apacen.data.Term.BinOpKind.MAX
+import org.smallibs.apacen.data.Term.BinOpKind.MIN
 import org.smallibs.apacen.data.Term.Variable
 
 object Optimizer {

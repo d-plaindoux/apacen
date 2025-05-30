@@ -4,13 +4,13 @@ import org.smallibs.apacen.data.CompoundTerm.Comparator
 import org.smallibs.apacen.data.CompoundTerm.Relation
 import org.smallibs.apacen.data.Term
 import org.smallibs.apacen.data.Term.BinOp
-import org.smallibs.apacen.data.Term.Kind.ADD
-import org.smallibs.apacen.data.Term.Kind.DIV
-import org.smallibs.apacen.data.Term.Kind.GEN
-import org.smallibs.apacen.data.Term.Kind.MAX
-import org.smallibs.apacen.data.Term.Kind.MIN
-import org.smallibs.apacen.data.Term.Kind.MUL
-import org.smallibs.apacen.data.Term.Kind.SUB
+import org.smallibs.apacen.data.Term.BinOpKind.ADD
+import org.smallibs.apacen.data.Term.BinOpKind.DIV
+import org.smallibs.apacen.data.Term.BinOpKind.GEN
+import org.smallibs.apacen.data.Term.BinOpKind.MAX
+import org.smallibs.apacen.data.Term.BinOpKind.MIN
+import org.smallibs.apacen.data.Term.BinOpKind.MUL
+import org.smallibs.apacen.data.Term.BinOpKind.SUB
 import org.smallibs.apacen.engine.term.Variables.Direction
 import org.smallibs.apacen.engine.term.Variables.Direction.LEFT
 import org.smallibs.apacen.engine.term.Variables.Direction.RIGHT
@@ -85,7 +85,7 @@ object Transformer {
 
                     DIV -> rhd.lhd.negative()?.let { negative ->
                         val comparator = if (negative) comparator.reverse() else comparator
-                        Relation(comparator, BinOp(DIV, rhd.lhd, lhd), rhd.rhd)
+                        Relation(comparator.reverse(), BinOp(DIV, rhd.lhd, lhd), rhd.rhd)
                     }
 
                     MIN, MAX, is GEN -> throw IllegalArgumentException()

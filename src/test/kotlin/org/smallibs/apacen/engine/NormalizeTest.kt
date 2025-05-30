@@ -3,9 +3,9 @@ package org.smallibs.apacen.engine
 import org.junit.jupiter.api.Test
 import org.smallibs.apacen.data.Environment
 import org.smallibs.apacen.data.Term.BinOp
-import org.smallibs.apacen.data.Term.Kind.DIV
-import org.smallibs.apacen.data.Term.Kind.MUL
-import org.smallibs.apacen.data.Term.Kind.SUB
+import org.smallibs.apacen.data.Term.BinOpKind.DIV
+import org.smallibs.apacen.data.Term.BinOpKind.MUL
+import org.smallibs.apacen.data.Term.BinOpKind.SUB
 import org.smallibs.apacen.data.Term.NumberLiteral
 import org.smallibs.apacen.engine.term.normalize
 import kotlin.test.assertEquals

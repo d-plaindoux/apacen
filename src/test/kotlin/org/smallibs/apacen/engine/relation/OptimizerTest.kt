@@ -6,7 +6,7 @@ import org.smallibs.apacen.data.CompoundTerm.Comparator.GTE
 import org.smallibs.apacen.data.CompoundTerm.Comparator.LTE
 import org.smallibs.apacen.data.CompoundTerm.Relation
 import org.smallibs.apacen.data.Term.BinOp
-import org.smallibs.apacen.data.Term.Kind.MIN
+import org.smallibs.apacen.data.Term.BinOpKind.MIN
 import org.smallibs.apacen.data.Term.NumberLiteral
 import org.smallibs.apacen.data.Term.Variable
 import org.smallibs.apacen.engine.relation.Optimizer.optimize

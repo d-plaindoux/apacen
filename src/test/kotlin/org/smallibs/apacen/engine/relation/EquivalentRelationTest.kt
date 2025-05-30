@@ -15,7 +15,7 @@ class EquivalentRelationTest {
         // Given
         val path = IList.Companion.of(Variables.Direction.RIGHT)
         val lhd = Term.NumberLiteral(1.0)
-        val rhd = Term.BinOp(Term.Kind.ADD, Term.NumberLiteral(3.0), Term.Variable("A"))
+        val rhd = Term.BinOp(Term.BinOpKind.ADD, Term.NumberLiteral(3.0), Term.Variable("A"))
 
         // When
         val equation = CompoundTerm.Relation(CompoundTerm.Comparator.EQ, lhd, rhd).transform(path)
@@ -24,7 +24,7 @@ class EquivalentRelationTest {
         Assertions.assertEquals(
             CompoundTerm.Relation(
                 CompoundTerm.Comparator.EQ,
-                Term.BinOp(Term.Kind.SUB, Term.NumberLiteral(1.0), Term.NumberLiteral(3.0)),
+                Term.BinOp(Term.BinOpKind.SUB, Term.NumberLiteral(1.0), Term.NumberLiteral(3.0)),
                 Term.Variable("A")
             ),
             equation
@@ -36,7 +36,7 @@ class EquivalentRelationTest {
         // Given
         val path = IList.Companion.of(Variables.Direction.LEFT)
         val lhd = Term.NumberLiteral(1.0)
-        val rhd = Term.BinOp(Term.Kind.ADD, Term.Variable("A"), Term.NumberLiteral(3.0))
+        val rhd = Term.BinOp(Term.BinOpKind.ADD, Term.Variable("A"), Term.NumberLiteral(3.0))
 
         // When
         val equation = CompoundTerm.Relation(CompoundTerm.Comparator.EQ, lhd, rhd).transform(path)
@@ -45,7 +45,7 @@ class EquivalentRelationTest {
         Assertions.assertEquals(
             CompoundTerm.Relation(
                 CompoundTerm.Comparator.EQ,
-                Term.BinOp(Term.Kind.SUB, Term.NumberLiteral(1.0), Term.NumberLiteral(3.0)),
+                Term.BinOp(Term.BinOpKind.SUB, Term.NumberLiteral(1.0), Term.NumberLiteral(3.0)),
                 Term.Variable("A")
             ),
             equation
@@ -57,7 +57,7 @@ class EquivalentRelationTest {
         // Given
         val path = IList.Companion.of(Variables.Direction.RIGHT)
         val lhd = Term.NumberLiteral(1.0)
-        val rhd = Term.BinOp(Term.Kind.SUB, Term.NumberLiteral(3.0), Term.Variable("A"))
+        val rhd = Term.BinOp(Term.BinOpKind.SUB, Term.NumberLiteral(3.0), Term.Variable("A"))
 
         // When
         val equation = CompoundTerm.Relation(CompoundTerm.Comparator.EQ, lhd, rhd).transform(path)
@@ -66,7 +66,7 @@ class EquivalentRelationTest {
         Assertions.assertEquals(
             CompoundTerm.Relation(
                 CompoundTerm.Comparator.EQ,
-                Term.BinOp(Term.Kind.SUB, Term.NumberLiteral(3.0), Term.NumberLiteral(1.0)),
+                Term.BinOp(Term.BinOpKind.SUB, Term.NumberLiteral(3.0), Term.NumberLiteral(1.0)),
                 Term.Variable("A")
             ),
             equation
@@ -78,7 +78,7 @@ class EquivalentRelationTest {
         // Given
         val path = IList.Companion.of(Variables.Direction.LEFT)
         val lhd = Term.NumberLiteral(1.0)
-        val rhd = Term.BinOp(Term.Kind.SUB, Term.Variable("A"), Term.NumberLiteral(3.0))
+        val rhd = Term.BinOp(Term.BinOpKind.SUB, Term.Variable("A"), Term.NumberLiteral(3.0))
 
         // When
         val equation = CompoundTerm.Relation(CompoundTerm.Comparator.EQ, lhd, rhd).transform(path)
@@ -87,7 +87,7 @@ class EquivalentRelationTest {
         Assertions.assertEquals(
             CompoundTerm.Relation(
                 CompoundTerm.Comparator.EQ,
-                Term.BinOp(Term.Kind.ADD, Term.NumberLiteral(1.0), Term.NumberLiteral(3.0)),
+                Term.BinOp(Term.BinOpKind.ADD, Term.NumberLiteral(1.0), Term.NumberLiteral(3.0)),
                 Term.Variable("A")
             ),
             equation
@@ -99,7 +99,7 @@ class EquivalentRelationTest {
         // Given
         val path = IList.Companion.of(Variables.Direction.RIGHT)
         val lhd = Term.NumberLiteral(1.0)
-        val rhd = Term.BinOp(Term.Kind.MUL, Term.NumberLiteral(3.0), Term.Variable("A"))
+        val rhd = Term.BinOp(Term.BinOpKind.MUL, Term.NumberLiteral(3.0), Term.Variable("A"))
 
         // When
         val equation = CompoundTerm.Relation(CompoundTerm.Comparator.EQ, lhd, rhd).transform(path)
@@ -108,7 +108,7 @@ class EquivalentRelationTest {
         Assertions.assertEquals(
             CompoundTerm.Relation(
                 CompoundTerm.Comparator.EQ,
-                Term.BinOp(Term.Kind.DIV, Term.NumberLiteral(1.0), Term.NumberLiteral(3.0)),
+                Term.BinOp(Term.BinOpKind.DIV, Term.NumberLiteral(1.0), Term.NumberLiteral(3.0)),
                 Term.Variable("A")
             ),
             equation
@@ -120,7 +120,7 @@ class EquivalentRelationTest {
         // Given
         val path = IList.Companion.of(Variables.Direction.LEFT)
         val lhd = Term.NumberLiteral(1.0)
-        val rhd = Term.BinOp(Term.Kind.MUL, Term.Variable("A"), Term.NumberLiteral(3.0))
+        val rhd = Term.BinOp(Term.BinOpKind.MUL, Term.Variable("A"), Term.NumberLiteral(3.0))
 
         // When
         val equation = CompoundTerm.Relation(CompoundTerm.Comparator.EQ, lhd, rhd).transform(path)
@@ -129,7 +129,7 @@ class EquivalentRelationTest {
         Assertions.assertEquals(
             CompoundTerm.Relation(
                 CompoundTerm.Comparator.EQ,
-                Term.BinOp(Term.Kind.DIV, Term.NumberLiteral(1.0), Term.NumberLiteral(3.0)),
+                Term.BinOp(Term.BinOpKind.DIV, Term.NumberLiteral(1.0), Term.NumberLiteral(3.0)),
                 Term.Variable("A")
             ),
             equation
@@ -141,7 +141,7 @@ class EquivalentRelationTest {
         // Given
         val path = IList.Companion.of(Variables.Direction.RIGHT)
         val lhd = Term.NumberLiteral(1.0)
-        val rhd = Term.BinOp(Term.Kind.DIV, Term.NumberLiteral(3.0), Term.Variable("A"))
+        val rhd = Term.BinOp(Term.BinOpKind.DIV, Term.NumberLiteral(3.0), Term.Variable("A"))
 
         // When
         val equation = CompoundTerm.Relation(CompoundTerm.Comparator.EQ, lhd, rhd).transform(path)
@@ -150,7 +150,7 @@ class EquivalentRelationTest {
         Assertions.assertEquals(
             CompoundTerm.Relation(
                 CompoundTerm.Comparator.EQ,
-                Term.BinOp(Term.Kind.DIV, Term.NumberLiteral(3.0), Term.NumberLiteral(1.0)),
+                Term.BinOp(Term.BinOpKind.DIV, Term.NumberLiteral(3.0), Term.NumberLiteral(1.0)),
                 Term.Variable("A")
             ),
             equation
@@ -162,7 +162,7 @@ class EquivalentRelationTest {
         // Given
         val path = IList.Companion.of(Variables.Direction.LEFT)
         val lhd = Term.NumberLiteral(1.0)
-        val rhd = Term.BinOp(Term.Kind.DIV, Term.Variable("A"), Term.NumberLiteral(3.0))
+        val rhd = Term.BinOp(Term.BinOpKind.DIV, Term.Variable("A"), Term.NumberLiteral(3.0))
 
         // When
         val equation = CompoundTerm.Relation(CompoundTerm.Comparator.EQ, lhd, rhd).transform(path)
@@ -171,7 +171,7 @@ class EquivalentRelationTest {
         Assertions.assertEquals(
             CompoundTerm.Relation(
                 CompoundTerm.Comparator.EQ,
-                Term.BinOp(Term.Kind.MUL, Term.NumberLiteral(1.0), Term.NumberLiteral(3.0)),
+                Term.BinOp(Term.BinOpKind.MUL, Term.NumberLiteral(1.0), Term.NumberLiteral(3.0)),
                 Term.Variable("A")
             ),
             equation
@@ -184,8 +184,8 @@ class EquivalentRelationTest {
         val path = IList.Companion.of(Variables.Direction.LEFT, Variables.Direction.RIGHT)
         val lhd = Term.NumberLiteral(1.0)
         val rhd = Term.BinOp(
-            Term.Kind.DIV,
-            Term.BinOp(Term.Kind.MUL, Term.NumberLiteral(3.0), Term.Variable("A")),
+            Term.BinOpKind.DIV,
+            Term.BinOp(Term.BinOpKind.MUL, Term.NumberLiteral(3.0), Term.Variable("A")),
             Term.NumberLiteral(75.0)
         )
 
@@ -197,8 +197,8 @@ class EquivalentRelationTest {
             CompoundTerm.Relation(
                 CompoundTerm.Comparator.EQ,
                 Term.BinOp(
-                    Term.Kind.DIV,
-                    Term.BinOp(Term.Kind.MUL, Term.NumberLiteral(value = 1.0), Term.NumberLiteral(value = 75.0)),
+                    Term.BinOpKind.DIV,
+                    Term.BinOp(Term.BinOpKind.MUL, Term.NumberLiteral(value = 1.0), Term.NumberLiteral(value = 75.0)),
                     Term.NumberLiteral(value = 3.0)
                 ),
                 Term.Variable("A")

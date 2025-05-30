@@ -7,7 +7,7 @@ import org.smallibs.core.IList
 import org.smallibs.apacen.data.Generator
 import org.smallibs.apacen.data.Term.BinOp
 import org.smallibs.apacen.data.Term.Constructor
-import org.smallibs.apacen.data.Term.Kind.MUL
+import org.smallibs.apacen.data.Term.BinOpKind.MUL
 import org.smallibs.apacen.data.Term.NumberLiteral
 import org.smallibs.apacen.data.Term.Variable
 import org.smallibs.apacen.engine.term.Fresh.fresh

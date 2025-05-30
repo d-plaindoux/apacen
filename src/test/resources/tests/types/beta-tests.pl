@@ -9,6 +9,6 @@
 
 -{ Cases with unbound variables }-
 
-?- assertTrue(beta(T[x:=y], T[x:=y], _), "T[x:=y] = y").
+?- assertTrue(beta(T[x:=y], T[x:=y], _), "T[x:=y] = T[x:=y]").
 ?- assertTrue(beta(t[X:=y], t, _), "t[X:=y] = y").
 ?- assertTrue(beta(t[x:=Y], t, _), "t[X:=y] = y").

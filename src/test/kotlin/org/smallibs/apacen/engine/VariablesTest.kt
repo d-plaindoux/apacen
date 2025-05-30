@@ -3,8 +3,8 @@ package org.smallibs.apacen.engine
 import org.junit.jupiter.api.Test
 import org.smallibs.core.IList
 import org.smallibs.apacen.data.Term.BinOp
-import org.smallibs.apacen.data.Term.Kind.DIV
-import org.smallibs.apacen.data.Term.Kind.MUL
+import org.smallibs.apacen.data.Term.BinOpKind.DIV
+import org.smallibs.apacen.data.Term.BinOpKind.MUL
 import org.smallibs.apacen.data.Term.NumberLiteral
 import org.smallibs.apacen.data.Term.Variable
 import org.smallibs.apacen.engine.term.Variables.Direction.LEFT

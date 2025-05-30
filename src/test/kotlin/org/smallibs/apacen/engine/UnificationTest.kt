@@ -8,7 +8,7 @@ import org.smallibs.core.IList
 import org.smallibs.apacen.data.Environment
 import org.smallibs.apacen.data.Term.BinOp
 import org.smallibs.apacen.data.Term.Constructor
-import org.smallibs.apacen.data.Term.Kind.ADD
+import org.smallibs.apacen.data.Term.BinOpKind.ADD
 import org.smallibs.apacen.data.Term.NumberLiteral
 import org.smallibs.apacen.data.Term.Variable
 import org.smallibs.apacen.engine.declaration.Unification

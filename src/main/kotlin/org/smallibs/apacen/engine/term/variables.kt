@@ -6,8 +6,8 @@ import org.smallibs.core.ILists.map
 import org.smallibs.apacen.data.Term
 import org.smallibs.apacen.data.Term.BinOp
 import org.smallibs.apacen.data.Term.Constructor
-import org.smallibs.apacen.data.Term.Kind
-import org.smallibs.apacen.data.Term.Kind.MIN
+import org.smallibs.apacen.data.Term.BinOpKind
+import org.smallibs.apacen.data.Term.BinOpKind.MIN
 import org.smallibs.apacen.data.Term.NumberLiteral
 import org.smallibs.apacen.data.Term.StringLiteral
 import org.smallibs.apacen.data.Term.Variable
@@ -22,10 +22,10 @@ object Variables {
     fun Term.variables(): Map<Variable, IList<Direction>> =
         this.transformations().map { it.key to it.value.map { it.second } }.toMap()
 
-    fun Term.transformations(): Map<Variable, IList<Pair<Kind, Direction>>> =
+    fun Term.transformations(): Map<Variable, IList<Pair<BinOpKind, Direction>>> =
         when (this) {
             is BinOp ->
-                if (kind == MIN || kind == Kind.MAX) {
+                if (kind == MIN || kind == BinOpKind.MAX) {
                     emptyMap()
                 } else {
                     lhd.transformations().map { entry ->

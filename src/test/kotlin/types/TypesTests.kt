@@ -11,9 +11,9 @@ class TypesTests {
             // Load test library
             .load(File("test/assert.pl"))
             // Load and perform tests
-            .load(File("types/tests/subst-tests.pl"))
-            .load(File("types/tests/beta-tests.pl"))
-            .load(File("types/tests/type_tests.pl"))
+            .load(File("tests/types/subst-tests.pl"))
+            .load(File("tests/types/beta-tests.pl"))
+            .load(File("tests/types/type_tests.pl"))
     }
 
 }

@@ -34,7 +34,7 @@ data class Interpreter(private val rules: IList<Rule>) {
     fun process(program: Pair<IList<Rule>, IList<Fact>>): Interpreter {
         val rules = this.rules.append(program.first)
 
-        with(Solver(this.rules)) {
+        with(Solver(rules)) {
             program.second.reverse().map { it.value }.map { goals ->
                 val variables = goals.free()
                 next(goals, variables, solve(goals).display(goals, 0, variables))

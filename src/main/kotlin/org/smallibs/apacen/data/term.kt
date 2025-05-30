@@ -1,19 +1,19 @@
 package org.smallibs.apacen.data
 
-import org.smallibs.apacen.data.Term.Kind.MAX
-import org.smallibs.apacen.data.Term.Kind.MIN
+import org.smallibs.apacen.data.Term.BinOpKind.MAX
+import org.smallibs.apacen.data.Term.BinOpKind.MIN
 import org.smallibs.core.IList
 
 
 sealed interface Term : Pretty {
-    sealed class Kind(val value: String, val precedence: Int) {
-        data object ADD : Kind("+", 1)
-        data object SUB : Kind("-", 1)
-        data object MUL : Kind("*", 2)
-        data object DIV : Kind("/", 2)
-        data object MIN : Kind("min", 3)
-        data object MAX : Kind("max", 3)
-        data class GEN(val name: String) : Kind(name, 4)
+    sealed class BinOpKind(val value: String, val precedence: Int) {
+        data object ADD : BinOpKind("+", 1)
+        data object SUB : BinOpKind("-", 1)
+        data object MUL : BinOpKind("*", 2)
+        data object DIV : BinOpKind("/", 2)
+        data object MIN : BinOpKind("min", 3)
+        data object MAX : BinOpKind("max", 3)
+        data class GEN(val name: String) : BinOpKind(name, 4)
     }
 
     data class Variable(private val name: String?, private val generation: Int = 0) : Term {
@@ -30,7 +30,7 @@ sealed interface Term : Pretty {
         override fun asString(): String = value
     }
 
-    data class BinOp(val kind: Kind, val lhd: Term, val rhd: Term) : Term {
+    data class BinOp(val kind: BinOpKind, val lhd: Term, val rhd: Term) : Term {
         override fun asString(): String =
             if (kind == MIN || kind == MAX) {
                 "${kind.value}(${lhd.asString()}, ${rhd.asString()})"
