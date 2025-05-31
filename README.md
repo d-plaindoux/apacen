@@ -5,8 +5,16 @@
 The current Prolog kernel is an ad-hoc implementation in Kotlin. 
 It does not use research results like the Warren abstract machine.
 
-The first target is the expressivity manipulating data structures
-with operators and constructors quite easily.
+## Objectives
+
+### Expressivity
+
+The first objective is to express the manipulation of
+data structures using operators and constructors.
+
+### Additional Solver
+
+Second objective is the design of SAT and SMT solving in Prolog
 
 References: 
 - [A pearl on SAT and SMT solving in Prolog](https://www.sciencedirect.com/science/article/pii/S030439751200165X)
