@@ -17,6 +17,7 @@ ascription(X => R,(X => E) : T)                 :- !,const0(X),ascription(R,E : 
 ascription(R1 @ R2,E : T)                       :- !,term(R1,E1),ascription(R2,E2 : T),leftAssoc(E2,E1,E).
 ascription(R1 | R2,(E1 | E2) : T)               :- !,term(R1,E1),ascription(R2,E2 : T).
 ascription(R1 :=: R2,(E1 :=: E2) : T)           :- !,term(R1,E1),ascription(R2,E2 : T).
+ascription(A,_)                                 :- !, println("Cannot normalise ascription", A), fail.
 
 term(E,E)                                       :- unbound(E),!. -- holes are allowed
 term(E,E)                                       :- const0(E),!.
@@ -40,6 +41,7 @@ term(pair(R1,R2),pair(E1,E2))                   :- !,term(R1,E1),term(R2,E2).
 term(R1 : R2,E : T)                             :- !,term(R1,E),term(R2,T).
 term(R1 :=: R2,E1 :=: E2)                       :- !,term(R1,E1),term(R2,E2).
 term(subst_by(R1,R2),subst_by(E1,E2))           :- !,term(R1,E1),term(R2,E2).
+term(A,_)                                       :- !, println("Cannot normalise term", A), fail.
 
 -- do not work for term like a @ (b @ c). The last group is not preserved (@ should be left associative)
 

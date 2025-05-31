@@ -1,3 +1,4 @@
+has_proof(K,proof(K))             :- !.
 has_proof(K,proof(K,_))           :- !.
 has_proof(K,proof(K,_,_))         :- !.
 has_proof(K,proof(K,_,_,_))       :- !.

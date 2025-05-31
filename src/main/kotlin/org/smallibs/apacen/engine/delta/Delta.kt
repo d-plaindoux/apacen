@@ -71,5 +71,4 @@ object Delta {
                 null
             }
         }
-
 }

@@ -14,7 +14,7 @@ type(R, LOG) :-
 
 -{ Type system }-
 
-type_system(Gamma |- E : T,proof(stopped,Gamma |- E : T)) :-
+type_system(Gamma |- E : T,proof(hole,Gamma |- E : T)) :-
     unbound(E), unbound(T),
     !.
 
@@ -104,10 +104,11 @@ type_system(Strategy,Gamma |- snd(A) : R,proof(snd,LOG,RED)) :-
     type_system(Gamma |- A : ((X:L) * R1),LOG),
     beta(R1[X:=fst(A)],R,RED).
 
-type_system(_,Gamma |- pair(A,B) : (X:L) * R1,proof(pair,LOG1,LOG2)) :-
+type_system(_,Gamma |- pair(A,B) : (X:L) * R1,proof(pair,LOG1,RED,LOG2)) :-
     !,
     type_system(Gamma |- A : L,LOG1),
-    type_system(Gamma |- B : R1[X:=A],LOG2).
+    beta(R1[X:=A],R,RED), -- Force the beta reduction / should be transparent
+    type_system(Gamma |- B : R,LOG2).
 
 -{ Sum type }-
 
@@ -148,22 +149,32 @@ type_system(Strategy,Gamma |- (A :=: B) : type(_),proof(equality,LOG1,LOG2)) :-
     type_system(Gamma |- A : T,LOG1),
     type_system(Gamma |- B : T,LOG2).
 
-type_system(Strategy,Gamma |- refl : (T :=: T),proof(reflexivity)) :-
-    member(Strategy,check::infer_type::nil),
+type_system(_,Gamma |- refl : T:=:T,proof(reflexivity)) :-
     !.
 
-type_system(Strategy,Gamma |- subst_by(A,B) : TA,proof(subst_by,LOG1,LOG2)) :-
+type_system(Strategy,Gamma |- subst_by(A,B) : TA,proof(subst_by,LOG1,RED,LOG2)) :-
     member(Strategy,check::infer_type::nil),
+    type_system(Gamma |- B : X:=:TB,LOG1),
+    const0(X),
+    beta(TA[X := TB], TAB, RED),
+    not(equals(TA,TAB)),
     !,
-    type_system(Gamma |- B : X :=: TB,LOG1),
-    type_system(Gamma |- A : TA[X := TB],LOG2).
+    type_system(Gamma |- A : TAB,LOG2).
 
--{ Reduction stage,error and stopped }-
+type_system(Strategy,Gamma |- subst_by(A,B) : TA,proof(subst_by,LOG1,RED,LOG2)) :-
+    member(Strategy,check::infer_type::nil),
+    type_system(Gamma |- B : TB:=:X,LOG1),
+    const0(X),
+    !,
+    beta(TA[X := TB], TAB, RED),
+    type_system(Gamma |- A : TAB,LOG2).
+
+-{ Reduction stage,error and hole }-
 
 type_system(infer_type,Gamma |- A : T,proof(error,Gamma |- A : T)) :-
     !.
 
-type_system(infer_term,Gamma |- A : T,proof(stopped,Gamma |- A : T)) :-
+type_system(infer_term,Gamma |- A : T,proof(hole,Gamma |- A : T)) :-
     !.
 
 type_system(check,Gamma |- A : T,proof(error,Gamma |- A:T)) :-

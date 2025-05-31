@@ -243,9 +243,9 @@ data class Solver(val system: IList<Rule>, val generator: Generator = Generator(
 
                             else -> {
                                 if (trace) println(
-                                    "${" ".repeat(postponed.size)}<${postponed.size}/${generator.currentGeneration()}> Trying selection ${
+                                    "${" ".repeat(postponed.size)}<${postponed.size}/${generator.currentGeneration()}> unify ${
                                         this.normalize(environment).asString()
-                                    } with ${rules.head.head.asString()} ✅"
+                                    } with ${rules.head.head.asString()}"
                                 )
                                 ProofStep(
                                     select.first,
