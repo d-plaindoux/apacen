@@ -25,7 +25,7 @@ A first implementation of the [Type System](https://github.com/d-plaindoux/apace
 
 ## Why Apacen
 
-[Apacen](https://www.elfdict.com/w/apacen) means `after-sight` in Qenya, an elfic language.
+[Apacen](https://www.elfdict.com/w/apacen) means `after-sight` in Quenya, an elfic language.
 
 ## License
 
