@@ -8,7 +8,10 @@ It does not use research results like the Warren abstract machine.
 The first target is the expressivity manipulating data structures
 with operators and constructors quite easily.
 
-## Type system
+References: 
+- [A pearl on SAT and SMT solving in Prolog](https://www.sciencedirect.com/science/article/pii/S030439751200165X)
+
+## Example: A Dependant Type system
 
 A first implementation of the [Type System](https://github.com/d-plaindoux/apacen/tree/main/src/main/resources)
 
