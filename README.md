@@ -23,6 +23,10 @@ References:
 
 A first implementation of the [Type System](https://github.com/d-plaindoux/apacen/tree/main/src/main/resources)
 
+## Why Apacen
+
+[Apacen](https://www.elfdict.com/w/apacen) means `after-sight` in Qenya, an elfic language.
+
 ## License
 
 ```text
