@@ -42,9 +42,9 @@ E ::=
     (E:E)
     type(N)
 
-    E = E
+    E :=: E
     refl
-    subst(E,E)
+    subst_by(E,E)
 
     (*TODO*)
     { ident : E, ... }
