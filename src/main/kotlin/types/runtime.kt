@@ -17,4 +17,5 @@ object TypesRuntime {
             .load(File("types/beta.pl"))
             .load(File("types/system.pl"))
             .load(File("types/proof.pl"))
+            .load(File("types/program.pl"))
 }

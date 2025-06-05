@@ -6,7 +6,7 @@ subst(T[X:=Y],T,unbound)                                  :- unbound(X),const0(Y
 subst(T[X:=Y],T,unbound)                                  :- unbound(X),!.
 subst(T[X:=Y],T,unbound)                                  :- unbound(Y),!,equals(X,Y).
 subst(T[X:=Y],R,unbound)                                  :- unbound(T),!,equals(T[X:=Y],R).
-subst(X[X:=Y],Y,subst(X,Y))                               :- bound(X),!.
+subst(X[X:=Y],Y,subst)                                    :- bound(X),!.
 
 subst((E1 @ E2)[X:=Y],E3 @ E4,L1 @ L2)                    :- !,subst(E1[X:=Y],E3,L1),subst(E2[X:=Y],E4,L2).
 subst((X => E)[X:=_],X => E,arrow(hidden))                :- !.

@@ -17,17 +17,24 @@ ascription(X => R,(X => E) : T)                 :- !,const0(X),ascription(R,E : 
 ascription(R1 @ R2,E : T)                       :- !,term(R1,E1),ascription(R2,E2 : T),leftAssoc(E2,E1,E).
 ascription(R1 | R2,(E1 | E2) : T)               :- !,term(R1,E1),ascription(R2,E2 : T).
 ascription(R1 :=: R2,(E1 :=: E2) : T)           :- !,term(R1,E1),ascription(R2,E2 : T).
-ascription(A,_)                                 :- !, println("Cannot normalise ascription", A), fail.
+
+program((ID :: R1);R2, (ID::T);P)               :- !, term(R1,T), program(R2,P).
+program((ID := R1);R2, (ID:=T);P)               :- !, term(R1,T), program(R2,P).
+program(ID :: R1;R2, (ID::T);P)                 :- !, term(R1,T), program(R2,P).
+program(ID := R1;R2, (ID:=T);P)                 :- !, term(R1,T), program(R2,P).
+program(ID :: R, ID::E)                         :- !, term(R,E).
+program(ID := R, ID:=E)                         :- !, term(R,E).
 
 term(E,E)                                       :- unbound(E),!. -- holes are allowed
+term(type,type(0))                              :- !.
 term(E,E)                                       :- const0(E),!.
 term(E,E)                                       :- number(E),!.
 term(E,E)                                       :- string(E),!.
 term(type(E),type(E))                           :- number(E),!.
 term(type(E),type(E))                           :- unbound(E),!.
-term((X : R1) -> R2,(X : T1) -> E)              :- !,const0(X),term(R1,T1),term(R2,E).
+term((X : R1) -> R2,(X : T) -> E)               :- !,const0(X),term(R1,T),term(R2,E).
 term(R1 -> R2,(_ : T1) -> E)                    :- !,term(R1,T1),term(R2,E).
-term((X : R1) * R2,(X : T1) * E)                :- !,const0(X),term(R1,T1),term(R2,E).
+term((X : R1) * R2,(X : T) * E)                 :- !,const0(X),term(R1,T),term(R2,E).
 term(R1 * R2,(_ : T1) * E)                      :- !,term(R1,T1),term(R2,E).
 term(X => R,X => E)                             :- !,const0(X),term(R,E).
 term(R1 @ R2,E)                                 :- !,term(R1,E1),term(R2,E2),leftAssoc(E2,E1,E).
@@ -41,7 +48,7 @@ term(pair(R1,R2),pair(E1,E2))                   :- !,term(R1,E1),term(R2,E2).
 term(R1 : R2,E : T)                             :- !,term(R1,E),term(R2,T).
 term(R1 :=: R2,E1 :=: E2)                       :- !,term(R1,E1),term(R2,E2).
 term(subst_by(R1,R2),subst_by(E1,E2))           :- !,term(R1,E1),term(R2,E2).
-term(A,_)                                       :- !, println("Cannot normalise term", A), fail.
+term(rec(X:R1,R2),rec(X:T,E))                     :- !,const0(X),term(R1,T),term(R2,E).
 
 -- do not work for term like a @ (b @ c). The last group is not preserved (@ should be left associative)
 

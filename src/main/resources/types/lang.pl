@@ -1,10 +1,11 @@
 -{
-    goal ::=
-        G |- E : E
 
-    G ::=
-        nil
-        (ident:E) :: G
+    program ::=
+        declaration (";" declaration)*
+
+    declaration ::=
+        ident :: E
+        ident := E
 
     E ::=
         ident
@@ -30,11 +31,21 @@
         refl
         subst(E,E)
 
-(*TODO*)
-        { ident : E, ... }
-        { ident = E, ... }
+        rec(ident:E,E)
 
-        mu(ident,E)
+(*TODO*)
+        sig[ ident :: E; ... ]
+        val[ ident := E; ... ]
+
+    ---------------------------
+
+    goal ::=
+        G |- E : E
+
+    G ::=
+        nil
+        (ident::E)::G
+        (ident:=E)::G
 }-
 
 premise(G |- E : T) :- goal(G),term(E),term(T).
@@ -64,3 +75,4 @@ term(type(N))       :- !,number(N).
 term(E :=: F)       :- !,term(E),term(F).
 term(refl)          :- !.
 term(subst_by(E,F)) :- !,term(E),term(F).
+term(rec(X:E,F))    :- !,const0(X),term(E),term(F).

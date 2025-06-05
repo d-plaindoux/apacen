@@ -1,8 +1,10 @@
-betaSuccess(A,B) :- beta(A,B,L),assertFalse(has_proof(error,L),eq(A,B)),!.
-betaSuccess(A,B) :- println("❌", A, "=", B), abort.
-betaFailure(A,B) :- beta(A,B,L),assertTrue(has_proof(error,L),neq(A,B)),!.
-betaFailure(A,B) :- println("❌", A, "!=", B), abort.
+betaSuccess(A,B) :- betaSuccess(nil,A,B).
+betaFailure(A,B) :- betaFailure(nil,A,B).
 
+betaSuccess(Gamma,A,B) :- beta(Gamma,A,B,L),assertFalse(has_proof(error,L),eq(A,B)),!.
+betaSuccess(Gamma,A,B) :- println("❌", A, "=", B), abort.
+betaFailure(Gamma,A,B) :- beta(Gamma,A,B,L),assertTrue(has_proof(error,L),neq(A,B)),!.
+betaFailure(Gamma,A,B) :- println("❌", A, "!=", B), abort.
 
 ?- betaSuccess(x[x:=y], y).
 ?- betaFailure(x[z:=y], y).
@@ -18,3 +20,5 @@ betaFailure(A,B) :- println("❌", A, "!=", B), abort.
 ?- betaSuccess(T[x:=y], T[x:=y]).
 ?- betaSuccess(t[X:=y], t).
 ?- betaSuccess(t[x:=Y], t).
+
+?- betaSuccess((f:=(x=>x))::nil,f @ 1, 1).
