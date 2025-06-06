@@ -23,19 +23,19 @@ type_system(Gamma |- E : T,proof(hole,Gamma |- E : T)) :-
 type_system(Gamma |- E : T,LOG) :-
     bound(E), bound(T),
     !,
-    -- println(check, Gamma |- E : T),
+    -- println(check, gamma |- E : T),
     type_system(check,Gamma |- E : T,LOG).
 
 type_system(Gamma |- E : T,LOG) :-
     bound(E),
     !,
-    -- println(infer_type, Gamma |- E : T),
+    -- println(infer_type, gamma |- E : T),
     type_system(infer_type,Gamma |- E : T,LOG).
 
 type_system(Gamma |- E : T,LOG) :-
     bound(T),
     !,
-    -- println(infer_term,Gamma |- E : T),
+    -- println(infer_term,gamma |- E : T),
     type_system(infer_term,Gamma |- E : T,LOG).
 
 -{ Native types }-

@@ -100,11 +100,11 @@ display_proofs(K,proofs(P1,P2)) :-
         unit :: type(0);
         one  :: unit;
         list :: ((x:type(0)) -> type(0));
-        list := rec(l:type(0) -> type(0),x => (unit | ((e:x) * (l @ x))));
+        list := rec(l:type(0) -> type(0),x => (unit | (x * (l @ x))));
         nil  :: ((x:type(0)) -> (list @ x));
         nil  := (x => inl(one));
         cons :: ((x:type(0)) -> x -> (list @ x) -> (list @ x));
-        cons := (x => h => t => inr(pair(h,t))),
+        cons := (x => h => t => inr(pair(1,t))),
         valid(Program, Proof, Diagnostic).
     ```
 
@@ -112,21 +112,21 @@ display_proofs(K,proofs(P1,P2)) :-
 
     ```
     ?- Program =
-        expr :: ((x:type(0)) -> type(0));
+        expr :: (type(0) -> type(0));
         expr := rec(e:type(0) -> type(0),x => (int * (x :=: int)) | ((e @ int) * (e @ int) * (x :=: int)));
-        num  :: ((t:type) -> (p:t:=:int) -> int -> (expr @ t));
+        num  :: ((t:type) -> (t:=:int) -> int -> (expr @ t));
         num  := (t => p => a => inl(pair(a,p))),
         valid(Program, Proof, Diagnostic).
     ```
 
     ```
     ?- Program =
-        expr :: ((x:type(0)) -> type(0));
+        expr :: (type(0) -> type(0));
         expr := rec(e:type(0) -> type(0),x => (int * (x :=: int)) | ((e @ int) * (e @ int) * (x :=: int)));
-        num  :: ((t:type) -> (p:t:=:int) -> int -> (expr @ t));
+        num  :: ((t:type) -> (t:=:int) -> int -> (expr @ t));
         num  := (t => p => a => inl(pair(a,p)));
-        add  :: ((t:type) -> (p:t:=:int) -> (expr @ int) -> (expr @ int) -> (expr @ t));
-        add  := (t => p => a => b => inr(pair(a,pair(b,p)))),
+        add  :: ((t:type) -> (t:=:int) -> (expr @ int) -> (expr @ int) -> (expr @ t));
+        add  := (t => p => a => b => inr(pair(a,pair(b,P)))),
         valid(Program, Proof, Diagnostic).
     ```
 

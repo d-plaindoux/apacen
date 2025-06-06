@@ -22,6 +22,12 @@
 ?- assertTrue(subst(((z:t) * x)[x:=y],(z:t) * y, _), "((z:t) * x)[x:=y] = (z:t) * y").
 ?- assertTrue(subst((x:t)[x:=y],(y:t), _), "(x:t)[x:=y] = (y:t)").
 ?- assertTrue(subst((t:x)[x:=y],(t:y), _), "(t:x)[x:=y] = (y:t)").
+?- assertTrue(subst((x:=:y)[x:=y],(y:=:y), _), "(x:=:y)[x:=y] = (y:=:y)").
+?- assertTrue(subst(subst_by(x,t)[x:=y],subst_by(y,t), _), "subst_by(x,t)[x:=y] = subst_by(y,t)").
+?- assertTrue(subst(subst_by(t,x)[x:=y],subst_by(t,y), _), "subst_by(t,x)[x:=y] = subst_by(t,y)").
+?- assertTrue(subst(rec(x:z,t)[x:=y],rec(x:z,t), _), "rec(x:z,t)[x:=y] = rec(x:z,t)").
+?- assertTrue(subst(rec(z:x,t)[x:=y],rec(z:y,t), _), "rec(z:x,t)[x:=y] = rec(z:y,t)").
+?- assertTrue(subst(rec(z:t,x)[x:=y],rec(z:t,y), _), "rec(z:t,x)[x:=y] = rec(z:t,x)").
 ?- assertTrue(subst(T[x:=y],T[x:=y], _), "T[x:=y] = T[x:=y]").
 ?- assertTrue(subst(x[X:=y],x, _), "x[X:=y] = x").
 ?- assertTrue(subst(x[x:=Y],x, _), "x[x:=Y] = x").

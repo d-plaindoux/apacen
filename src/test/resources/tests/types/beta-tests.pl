@@ -22,3 +22,10 @@ betaFailure(Gamma,A,B) :- println("❌", A, "!=", B), abort.
 ?- betaSuccess(t[x:=Y], t).
 
 ?- betaSuccess((f:=(x=>x))::nil,f @ 1, 1).
+
+-- BUG in the reduction
+
+?- betaSuccess(
+        (((_:int) * (x :=: int)) | ((_:(e @ int)) * ((_:(e @ int)) * (x :=: int))))[x := t],
+        (((_:int) * (t :=: int)) | ((_:(e @ int)) * ((_:(e @ int)) * (t :=: int))))
+   ).
