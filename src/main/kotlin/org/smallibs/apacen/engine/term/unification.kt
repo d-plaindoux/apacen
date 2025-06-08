@@ -41,8 +41,7 @@ object Unification {
                     // Reject cyclic unification [?]
                     null
                 } else {
-                    environment.substitutions[lhd]?.let { unify(environment, it, rhd) }
-                        ?: (environment.addSubstitution(lhd, rhd))
+                    environment.addSubstitution(lhd, rhd)
                 }
 
             is Constructor ->
@@ -77,8 +76,7 @@ object Unification {
                             // Reject cyclic unification [?]
                             null
                         } else {
-                            environment.substitutions[rhd]?.let { unify(environment, lhd, it) }
-                                ?: (environment.addSubstitution(rhd, lhd))
+                            environment.addSubstitution(rhd, lhd)
                         }
 
                     is BinOp ->
@@ -102,8 +100,7 @@ object Unification {
                             // Reject cyclic unification [?]
                             null
                         } else {
-                            environment.substitutions[rhd]?.let { unify(environment, lhd, it) }
-                                ?: (environment.addSubstitution(rhd, lhd))
+                            environment.addSubstitution(rhd, lhd)
                         }
 
                     else -> if (lhd == rhd) environment else null
