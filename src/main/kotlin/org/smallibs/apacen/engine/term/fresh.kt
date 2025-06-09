@@ -12,7 +12,7 @@ object Fresh {
     fun Term.fresh(generation: Int): Term =
         when (this) {
             is BinOp -> BinOp(kind, lhd.fresh(generation), rhd.fresh(generation))
-            is Variable -> if (isAnonymous) this else this.withGeneration(generation)
+            is Variable -> this.withGeneration(generation)
             is Constructor -> Constructor(name, parameters.fresh(generation))
             else -> this
         }

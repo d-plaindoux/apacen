@@ -33,9 +33,7 @@ object Unification {
 
         return when (lhd) {
             is Variable ->
-                if (lhd.isAnonymous) {
-                    environment
-                } else if (lhd == rhd) {
+                if (lhd == rhd) {
                     environment
                 } else if (rhd.free().contains(lhd)) {
                     // Reject cyclic unification [?]
@@ -47,9 +45,7 @@ object Unification {
             is Constructor ->
                 when (rhd) {
                     is Variable ->
-                        if (rhd.isAnonymous) {
-                            environment
-                        } else if (lhd.free().contains(rhd)) {
+                        if (lhd.free().contains(rhd)) {
                             // Reject cyclic unification [?]
                             null
                         } else {
@@ -70,9 +66,7 @@ object Unification {
             is BinOp ->
                 when (rhd) {
                     is Variable ->
-                        if (rhd.isAnonymous) {
-                            environment
-                        } else if (lhd.free().contains(rhd)) {
+                        if (lhd.free().contains(rhd)) {
                             // Reject cyclic unification [?]
                             null
                         } else {
@@ -94,9 +88,7 @@ object Unification {
             else ->
                 when (rhd) {
                     is Variable ->
-                        if (rhd.isAnonymous) {
-                            environment
-                        } else if (lhd.free().contains(rhd)) {
+                        if (lhd.free().contains(rhd)) {
                             // Reject cyclic unification [?]
                             null
                         } else {
