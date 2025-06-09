@@ -16,10 +16,18 @@ sealed interface Term : Pretty {
         data class GEN(val name: String) : BinOpKind(name, 4)
     }
 
-    data class Variable(private val name: String?, private val generation: Int = 0) : Term {
+    data class Variable(private val name: String?, private val generation: Int = 0) : Term, Comparable<Variable> {
         fun withGeneration(generation: Int): Variable = Variable(name, generation)
         val isAnonymous: Boolean get() = name == null
         override fun asString(): String = name?.let { name + if (generation > 0) "?$generation" else "" } ?: "_"
+        override fun compareTo(other: Variable): Int {
+            val nc = (name ?: "").compareTo(other.name ?: "")
+            return if (nc != 0) {
+                nc
+            } else {
+                generation.compareTo(other.generation)
+            }
+        }
     }
 
     data class NumberLiteral(val value: Double) : Term {

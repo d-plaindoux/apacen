@@ -76,7 +76,7 @@ data class Solver(val system: IList<Rule>, val generator: Generator = Generator(
                     }
 
                     is Relation ->
-                        reduce(runtime.environment.addEquation(goal.head))?.let { environment ->
+                        reduce(runtime.environment.addEquation(goal.head).copy())?.let { environment ->
                             Runtime(
                                 goal.tail,
                                 runtime.postponed,
@@ -271,7 +271,7 @@ data class Solver(val system: IList<Rule>, val generator: Generator = Generator(
 
     private fun Functor.select(environment: Environment, rule: Rule): Pair<IList<CompoundTerm>, Environment>? =
         rule.fresh(generator.nextGeneration()).let { rule ->
-            unify(environment, rule.head, this)?.let { rule.tail to it }
+            unify(environment.copy(), rule.head, this)?.let { rule.tail to it }
         }
 
     private tailrec fun cut(generation: Int, deferred: IList<Deferred>): IList<Deferred> =
