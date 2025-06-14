@@ -8,9 +8,13 @@ import org.smallibs.core.ILists.reverse
 
 sealed interface IList<out E> {
 
+    operator fun get(i: Int): E?
+
     fun asString(sep: String = "::", asString: E.() -> String, printEmpty: Boolean = true): String
 
     data object Nil : IList<Nothing> {
+        override fun get(i: Int): Nothing? = null
+
         override fun toString(): String = "nil"
 
         override fun asString(sep: String, asString: Nothing.() -> String, printEmpty: Boolean): String =
@@ -22,6 +26,13 @@ sealed interface IList<out E> {
     }
 
     data class Cons<E>(val head: E, val tail: IList<E>) : IList<E> {
+
+        override fun get(i: Int): E? =
+            if (i == 0) {
+                head
+            } else {
+                tail[i - 1]
+            }
 
         override fun toString(): String =
             this.reverse().foldRight({ e, l -> "$e::$l" }, "nil")

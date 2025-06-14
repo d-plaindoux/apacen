@@ -64,7 +64,7 @@ fun Term.normalize(environment: Environment): Term =
         }
 
         is Constructor -> Constructor(this.name, parameters.map { it.normalize(environment) })
-        is Term.Variable -> if (this.isAnonymous) this else environment.substitutions[this]?.normalize(environment)
+        is Term.Variable -> environment.substitutions[this]?.normalize(environment)
             ?: this
 
         is NumberLiteral -> this

@@ -13,7 +13,6 @@ typeFail(T) :- println("❌", T), abort.
 typeHole(T)  :- type(T,L),assertFalse(has_proof(error,L),T),assertTrue(has_proof(hole,L),T),!.
 typeHole(T)  :- println("❌", T), abort.
 
-
 -{ Type }-
 
 ?- typeFail(nil |- type(1) : type(1)).
@@ -91,7 +90,7 @@ typeHole(T)  :- println("❌", T), abort.
 
 -{ Propositional equality }-
 
-?- typeOkay(nil |- b => a => refl : (t:type(0)) -> (a:t) -> a:=:a).
+?- typeOkay(nil |- b => a => R : (t:type(0)) -> (a:t) -> a:=:a).
 ?- typeOkay(nil |- t => a => b => a_b => subst_by(refl,a_b) : (t:type(0)) -> (a:t) -> (b:t) -> (a:=:b) -> b:=:a).
 ?- typeOkay(nil |- t => a => b => c => a_b => b_c => subst_by(subst_by(refl,a_b),b_c) : (t:type(0)) -> (a:t) -> (b:t) -> (c:t) -> (a:=:b) -> (b:=:c) -> a:=:c).
 ?- typeOkay(nil |- ta => tb => f => a => b => a_b => subst_by(refl,a_b) : (ta:type(0)) -> (tb:type(0)) -> (f:ta -> tb) -> (a:ta) -> (b:ta) -> (a:=:b) -> (f@a):=:(f@b)).

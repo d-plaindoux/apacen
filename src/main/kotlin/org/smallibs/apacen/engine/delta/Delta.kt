@@ -8,6 +8,7 @@ import org.smallibs.apacen.data.Term.NumberLiteral
 import org.smallibs.apacen.data.Term.StringLiteral
 import org.smallibs.apacen.data.Term.Variable
 import org.smallibs.apacen.engine.Solver.Runtime
+import org.smallibs.apacen.engine.term.Unification
 import org.smallibs.apacen.engine.term.normalize
 import org.smallibs.core.IList
 import org.smallibs.core.IList.Cons
@@ -18,6 +19,24 @@ object Delta {
 
     var members: Map<String, Pair<Int?, (IList<Term>, Runtime) -> Pair<Runtime, IList<CompoundTerm>>?>> =
         mapOf(
+            "time_in_millis" to (1 to { l, r ->
+                val term = l.get(0)
+                if (term == null) {
+                    null
+                } else {
+                    val environment = Unification.unify(
+                        r.environment,
+                        l.get(0)!!,
+                        Term.NumberLiteral(System.currentTimeMillis().toDouble())
+                    )
+                    if (environment == null) {
+                        null
+                    } else {
+                        val r = Runtime(r.goals, r.postponed, r.rules, environment, r.deferred, r.trace)
+                        r to Nil
+                    }
+                }
+            }),
             "abort" to (0 to { l, r ->
                 System.exit(1)
                 val r = Runtime(r.goals, r.postponed, r.rules, r.environment, r.deferred, true)

@@ -53,12 +53,7 @@ type_system(_,Gamma |- A : string,proof(string)) :-
 -{ Type type }-
 
 type_system(Strategy,Gamma |- type(L1) : type(L2),proof(type(term))) :-
-    member(Strategy,check::infer_type::nil),
     L1 >= 0, L2 = L1 + 1,
-    !.
-
-type_system(infer_term,Gamma |- type(L1) : type(L2),proof(type(type))) :-
-    L2 >= 1, L2 = L1 + 1,
     !.
 
 -{ Hypothesis }-
@@ -92,7 +87,6 @@ type_system(Strategy,Gamma |- (A @ B) : T1,proof(abstraction,LOG1,LOG2,RED)) :-
 -{ Product type }-
 
 type_system(_,Gamma |- ((X:T) * M) : type(_),proof(type_product,LOG1,LOG2)) :-
-    member(Strategy,check::infer_type::nil),
     !,
     type_system(Gamma |- T : type(_),LOG1),
     type_system(((X:T)::Gamma) |- M : type(_),LOG2).
@@ -154,8 +148,7 @@ type_system(Strategy,Gamma |- (A:T) : T,proof(ascription,LOG)) :-
 
 -{ Propositional equality }-
 
-type_system(Strategy,Gamma |- (A :=: B) : type(_),proof(equality,LOG1,LOG2)) :-
-    member(Strategy,check::infer_type::nil),
+type_system(_,Gamma |- (A :=: B) : type(_),proof(equality,LOG1,LOG2)) :-
     !,
     type_system(Gamma |- A : T,LOG1),
     type_system(Gamma |- B : T,LOG2).
@@ -189,7 +182,7 @@ type_system(Strategy,Gamma |- rec(X:T1,M):T2,proof(type_rec,LOG1,LOG2)) :-
     type_system(((X:T1)::Gamma) |- M : T2,LOG2).
 
 type_system(Strategy,Gamma |- A : rec(X:T,M),proof(fold,RED,LOG)) :-
-    member(Strategy,check::infer_type::nil),
+    member(Strategy,check::infer_term::nil),
     !,
     beta(Gamma,M[X:=rec(X:T,M)],R,RED),
     type_system(Strategy,Gamma |- A : R,LOG).

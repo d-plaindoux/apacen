@@ -48,7 +48,7 @@ term(pair(R1,R2),pair(E1,E2))                   :- !,term(R1,E1),term(R2,E2).
 term(R1 : R2,E : T)                             :- !,term(R1,E),term(R2,T).
 term(R1 :=: R2,E1 :=: E2)                       :- !,term(R1,E1),term(R2,E2).
 term(subst_by(R1,R2),subst_by(E1,E2))           :- !,term(R1,E1),term(R2,E2).
-term(rec(X:R1,R2),rec(X:T,E))                     :- !,const0(X),term(R1,T),term(R2,E).
+term(rec(X:R1,R2),rec(X:T,E))                   :- !,const0(X),term(R1,T),term(R2,E).
 
 -- do not work for term like a @ (b @ c). The last group is not preserved (@ should be left associative)
 

@@ -21,7 +21,7 @@ sealed interface Term : Pretty {
         val isAnonymous: Boolean get() = name == null
         override fun asString(): String = name?.let { name + if (generation > 0) "?$generation" else "" } ?: "_"
         override fun compareTo(other: Variable): Int {
-            val nc = (name ?: "").compareTo(other.name ?: "")
+            val nc = (name ?: "_").compareTo(other.name ?: "_")
             return if (nc != 0) {
                 nc
             } else {
