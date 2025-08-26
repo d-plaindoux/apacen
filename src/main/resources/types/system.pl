@@ -2,10 +2,9 @@
     Dependant type checker implementation
 }-
 
-type(G |- E : T, LOG1) :-
+type(G |- E : T, LOG) :-
     !,
-    type_system(G |- E : T, LOG2),
-    equals(LOG1, LOG2).
+    type_system(G |- E : T, LOG).
 
 type(R, LOG) :-
     !,
@@ -58,10 +57,11 @@ type_system(Strategy,Gamma |- type(L1) : type(L2),proof(type(term))) :-
 
 -{ Hypothesis }-
 
-type_system(_,Gamma |- A : T1,proof(hypothesis)) :-
+type_system(Strategy,Gamma |- A : T1,proof(hypothesis)) :-
+    member(Strategy,check::infer_type::nil),
     member(A : T2,Gamma),
     beta(Gamma,T1,R1,_),
-    beta(Gamma,T2,R2,_),
+    beta(Gamma,T2,R2,_), -{ For recursive type }-
     equals(R1,R2),
     !.
 
@@ -102,11 +102,10 @@ type_system(Strategy,Gamma |- snd(A) : R,proof(snd,LOG,RED)) :-
     type_system(Gamma |- A : ((X:L) * R1),LOG),
     beta(Gamma,R1[X:=fst(A)],R,RED).
 
-type_system(_,Gamma |- pair(A,B) : (X:L) * R1,proof(pair,LOG1,RED,LOG2)) :-
+type_system(_,Gamma |- pair(A,B) : (X:L) * R1,proof(pair,LOG1,LOG2)) :-
     !,
     type_system(Gamma |- A : L,LOG1),
-    beta(Gamma,R1[X:=A],R,RED), -- Force the beta reduction / should be transparent
-    type_system(Gamma |- B : R,LOG2).
+    type_system(Gamma |- B : R1[X:=A],LOG2).
 
 -{ Sum type }-
 
@@ -169,8 +168,9 @@ type_system(Strategy,Gamma |- subst_by(A,B) : TA,proof(subst_by,LOG1,RED,LOG2)) 
     member(Strategy,check::infer_type::nil),
     type_system(Gamma |- B : TB:=:X,LOG1),
     const0(X),
-    !,
     beta(Gamma,TA[X := TB], TAB, RED),
+    not(equals(TA,TAB)),
+    !,
     type_system(Gamma |- A : TAB,LOG2).
 
 -{ Recursive type }-
@@ -187,7 +187,7 @@ type_system(Strategy,Gamma |- A : rec(X:T,M),proof(fold,RED,LOG)) :-
     beta(Gamma,M[X:=rec(X:T,M)],R,RED),
     type_system(Strategy,Gamma |- A : R,LOG).
 
--{ Reduction stage,error and hole }-
+-{ Reduction stage, error and hole }-
 
 type_system(infer_type,Gamma |- A : T,proof(error,Gamma |- A : T)) :-
     !.

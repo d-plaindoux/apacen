@@ -37,14 +37,14 @@ object Loader {
     }
 
     private fun reportError(path: String, lines: List<String>, program: Response.Reject<Char>) {
+        if (program.location.stack.isNotEmpty()) {
+            System.err.println("Syntax error in $path at ${program.location.line}:${program.location.column}: waiting for a ${program.location.stack.last()}")
+        } else {
+            System.err.println("Syntax error in $path at ${program.location.line}:${program.location.column}")
+        }
         System.err.println("| ${lines.get(program.location.line - 1)}")
         System.err.println("| ${"-".repeat(program.location.column - 1)}^")
 
-        if (program.location.stack.isNotEmpty()) {
-            System.err.println("| Syntax error in $path at ${program.location.line}:${program.location.column}: waiting for a ${program.location.stack.last()}")
-        } else {
-            System.err.println("| Syntax error in $path at ${program.location.line}:${program.location.column}")
-        }
     }
 
 }

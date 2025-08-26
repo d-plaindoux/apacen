@@ -35,19 +35,22 @@ valid_(Gamma,ID := Term,(Id := Term)::Gamma,IdProof) :-
     !,
     type(Gamma |- Id : T, IdProof).
 
-diagnostic(Proof,"Program is valid") :-
-    not(has_proofs(error,Proof)),
+diagnostic(Proof,"Program has errors") :-
+    has_proofs(error,Proof),
     !.
 
-diagnostic(Proof,"program has errors").
+diagnostic(_,"Program is valid").
 
 has_proofs(K,P) :-
     unbound(P),
-    !,
-    has_proof(K,P).
+    !.
 
 has_proofs(K,proofs(P1,P2)) :-
-    or(has_proof(K,P1),has_proof(K,P2)).
+    or(has_proof(K,P1),has_proofs(K,P2)),
+    !.
+
+has_proofs(K,P) :-
+    has_proof(K,P).
 
 display_proofs(K,proofs(P1,P2)) :-
     or(display_proof(K,P1),display_proofs(K,P2)).
@@ -126,76 +129,6 @@ display_proofs(K,proofs(P1,P2)) :-
 
     ```
     ?- Program =
-        expr :: (type -> type);
-        expr := rec(e:type -> type,x =>
-                    (int * (x :=: int))
-                  | ((e @ x))
-                );
-        num  :: ((t:type) -> (t:=:int) -> int -> (expr @ t));
-        num  := (t => p => a => inl(pair(a,p)));
-        eval :: ((t:type) -> (expr @ t) -> t);
-        eval := (t => e => case(e,i => subst_by(fst(i),snd(i)),e => eval @ t @ e)),
-        valid(Program, Diagnostic).
-    ```
-
-    ```
-    ?- Program =
-        expr :: (type -> type);
-        expr := rec(e:type -> type,x =>
-                    (int * (x :=: int))
-                  | ((e @ int) * (e @ int) * (x :=: int))
-                );
-        num  :: ((t:type) -> (t:=:int) -> int -> (expr @ t));
-        num  := (t => p => a => inl(pair(a,p)));
-        add  :: ((t:type) -> (t:=:int) -> (expr @ int) -> (expr @ int) -> (expr @ t));
-        add  := (t => p => a => b => inr(pair(a,pair(b,P)))),
-        valid(Program, Proof, Diagnostic).
-    ```
-
-    ```
-    ?- Program =
-        unit :: type;
-        one  :: unit;
-        bool :: type;
-        bool := (unit | unit);
-        expr :: (type -> type);
-        expr := rec(e:type -> type,x =>
-                    (int * (x :=: int))
-                  | ((e @ int) * (e @ int) * (x :=: int))
-                  | ((e @ bool) * (e @ x) * (e @ x))
-                );
-        num  :: ((t:type) -> (t:=:int) -> int -> (expr @ t));
-        add  :: ((t:type) -> (t:=:int) -> (expr @ int) -> (expr @ int) -> (expr @ t));
-        iff  :: ((t:type) -> (expr @ bool) -> (expr @ t) -> (expr @ t) -> (expr @ t));
-        num  := (t => p => a => inl(pair(a,p)));
-        add  := (t => p => a => b => inr(inl(pair(a,pair(b,p)))));
-        iff  := (t => b => t => f => inr(inr(pair(b,pair(t,f))))),
-        valid(Program, Diagnostic).
-    ```
-
-    ```
-    ?- Program =
-        unit :: type;
-        one  :: unit;
-        bool :: type;
-        bool := (unit | unit);
-        expr :: (type -> type);
-        expr := rec(e:type -> type,x =>
-                    (int * (x :=: int))
-                  | ((e @ int) * (e @ int) * (x :=: int))
-                  | ((e @ bool) * (e @ x) * (e @ x))
-                );
-        num  :: ((t:type) -> (t:=:int) -> int -> (expr @ t));
-        num  := (t => p => a => inl(pair(a,p)));
-        add  :: ((t:type) -> (t:=:int) -> (expr @ int) -> (expr @ int) -> (expr @ t));
-        add  := (t => p => a => b => inr(inl(pair(a,pair(b,p)))));
-        iff  :: ((t:type) -> (expr @ bool) -> (expr @ t) -> (expr @ t) -> (expr @ t));
-        iff  := (t => b => t => f => inr(inr(pair(b,pair(t,f))))),
-        valid(Program, Proof, Diagnostic).
-    ```
-
-    ```
-    ?- Program =
         unit :: type;
         one  :: unit;
         bool :: type;
@@ -208,13 +141,34 @@ display_proofs(K,proofs(P1,P2)) :-
                   | (bool * (x :=: bool))
                 );
         num  :: ((t:type) -> (t:=:int) -> int -> (expr @ t));
-        add  :: ((t:type) -> (t:=:int) -> (expr @ int) -> (expr @ int) -> (expr @ t));
-        iff  :: ((t:type) -> (expr @ bool) -> (expr @ t) -> (expr @ t) -> (expr @ t));
-        cond :: ((t:type) -> (t:=:bool) -> bool -> (expr @ t));
         num  := (t => p => a => inl(pair(a,p)));
+        add  :: ((t:type) -> (p:t:=:int) -> (l:expr @ int) -> (r:expr @ int) -> (expr @ t));
         add  := (t => p => a => b => inr(inl(pair(a,pair(b,p)))));
+        iff  :: ((t:type) -> (b:expr @ bool) -> (s:expr @ t) -> (f:expr @ t) -> (expr @ t));
         iff  := (t => b => t => f => inr(inr(inl(pair(b,pair(t,f))))));
-        cond := (t => p => a => inr(inr(inr(pair(a,p))))),
-        valid(Program, Diagnostic).
+        cond :: ((t:type) -> (b:t:=:bool) -> bool -> (expr @ t));
+        cond := (t => p => a => inr(inr(inr(pair(a,p)))));
+        eval :: ((t:type) -> (expr @ t) -> t);
+        eval := (t => e => F),
+        valid(Program, Proof, Diagnostic).
+    ```
+
+    ```
+    ?- Program =
+        expr :: (type -> type);
+        expr := rec(e:type -> type,x =>
+                    (int * (x :=: int))
+                  | ((e @ int) * (x :=: int))
+                );
+        add  :: (int -> int -> int);
+        eval :: ((t:type) -> (expr @ t) -> t);
+        eval := (t => e =>
+                case(e,
+                  e => subst_by(fst(e),snd(e)),
+                  e => subst_by(eval @ T @ fst(e),snd(e))
+                )
+        ),
+        -- Here in eval expression T is like implicit type
+        valid(Program, Proof, Diagnostic).
     ```
 }-

@@ -1,17 +1,17 @@
 -{ Type checking is okay }-
 
-typeOkay(T) :- type(T,L),assertFalse(has_proof(error,L),T),!.
-typeOkay(T) :- println("❌", T), abort.
+typeOkay(T) :- normalise(T,R),type(R,L),assertFalse(has_proof(error,L),R),!.
+typeOkay(T) :- normalise(T,R),println("❌", R), abort.
 
 -{ Type checking is a failure }-
 
-typeFail(T) :- type(T,L),assertTrue(has_proof(error,L),T),!.
-typeFail(T) :- println("❌", T), abort.
+typeFail(T) :- normalise(T,R),type(R,L),assertTrue(has_proof(error,L),R),!.
+typeFail(T) :- normalise(T,R),println("❌", R), abort.
 
 -{ Type checking is okay with an identified hole }-
 
-typeHole(T)  :- type(T,L),assertFalse(has_proof(error,L),T),assertTrue(has_proof(hole,L),T),!.
-typeHole(T)  :- println("❌", T), abort.
+typeHole(T)  :- normalise(T,R),type(R,L),assertFalse(has_proof(error,L),R),assertTrue(has_proof(hole,L),R),!.
+typeHole(T)  :- normalise(T,R),println("❌", R), abort.
 
 -{ Type }-
 

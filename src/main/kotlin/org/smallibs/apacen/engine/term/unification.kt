@@ -38,7 +38,7 @@ object Unification {
                 } else if (lhd == rhd) {
                     environment
                 } else if (rhd.free().contains(lhd)) {
-                    // Reject cyclic unification [?]
+                    // Reject cyclic unification
                     null
                 } else {
                     environment.addSubstitution(lhd, rhd)
@@ -50,7 +50,7 @@ object Unification {
                         if (rhd.isAnonymous) {
                             environment
                         } else if (lhd.free().contains(rhd)) {
-                            // Reject cyclic unification [?]
+                            // Reject cyclic unification
                             null
                         } else {
                             environment.substitutions[rhd]?.let { unify(environment, lhd, it) }
@@ -73,7 +73,7 @@ object Unification {
                         if (rhd.isAnonymous) {
                             environment
                         } else if (lhd.free().contains(rhd)) {
-                            // Reject cyclic unification [?]
+                            // Reject cyclic unification
                             null
                         } else {
                             environment.addSubstitution(rhd, lhd)
@@ -97,7 +97,7 @@ object Unification {
                         if (rhd.isAnonymous) {
                             environment
                         } else if (lhd.free().contains(rhd)) {
-                            // Reject cyclic unification [?]
+                            // Reject cyclic unification
                             null
                         } else {
                             environment.addSubstitution(rhd, lhd)

@@ -46,9 +46,9 @@ E ::=
     refl
     subst_by(E,E)
 
+    mu(ident,E)
+
     (*TODO*)
     { ident : E, ... }
     { ident = E, ... }
-
-    mu(ident,E)
 ```
