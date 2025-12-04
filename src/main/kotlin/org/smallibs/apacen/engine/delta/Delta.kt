@@ -17,9 +17,14 @@ import org.smallibs.core.ILists.map
 
 object Delta {
 
+    private fun <T> exit(code: Int): T {
+        System.err.println(code)
+        throw java.lang.RuntimeException()
+    }
+
     var members: Map<String, Pair<Int?, (IList<Term>, Runtime) -> Pair<Runtime, IList<CompoundTerm>>?>> =
         mapOf(
-            "time_in_millis" to (1 to { l, r ->
+            "anon" to (1 to { l, r ->
                 val term = l.get(0)
                 if (term == null) {
                     null
@@ -27,7 +32,7 @@ object Delta {
                     val environment = Unification.unify(
                         r.environment,
                         l.get(0)!!,
-                        Term.NumberLiteral(System.currentTimeMillis().toDouble())
+                        Constructor("_", Nil)
                     )
                     if (environment == null) {
                         null
@@ -37,16 +42,32 @@ object Delta {
                     }
                 }
             }),
-            "abort" to (0 to { l, r ->
-                System.exit(1)
+            "time_in_millis" to (1 to { l, r ->
+                val term = l.get(0)
+                if (term == null) {
+                    null
+                } else {
+                    val environment = Unification.unify(
+                        r.environment,
+                        l.get(0)!!,
+                        NumberLiteral(System.currentTimeMillis().toDouble())
+                    )
+                    if (environment == null) {
+                        null
+                    } else {
+                        val r = Runtime(r.goals, r.postponed, r.rules, environment, r.deferred, r.trace)
+                        r to Nil
+                    }
+                }
+            }),
+            "abort" to (0 to { _, r ->
+                exit(1)
+            }),
+            "trace_on" to (0 to { _, r ->
                 val r = Runtime(r.goals, r.postponed, r.rules, r.environment, r.deferred, true)
                 r to Nil
             }),
-            "trace_on" to (0 to { l, r ->
-                val r = Runtime(r.goals, r.postponed, r.rules, r.environment, r.deferred, true)
-                r to Nil
-            }),
-            "trace_off" to (0 to { l, r ->
+            "trace_off" to (0 to { _, r ->
                 val r = Runtime(r.goals, r.postponed, r.rules, r.environment, r.deferred, false)
                 r to Nil
             }),

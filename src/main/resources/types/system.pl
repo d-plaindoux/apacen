@@ -147,17 +147,17 @@ type_system(Strategy,Gamma |- (A:T) : T,proof(ascription,LOG)) :-
 
 -{ Propositional equality }-
 
-type_system(_,Gamma |- (A :=: B) : type(_),proof(equality,LOG1,LOG2)) :-
+type_system(_,Gamma |- (A :=: B) : type(_), proof(equality, LOG1, LOG2)) :-
     !,
-    type_system(Gamma |- A : T,LOG1),
-    type_system(Gamma |- B : T,LOG2).
+    type_system(Gamma |- A : T, LOG1),
+    type_system(Gamma |- B : T, LOG2).
 
-type_system(_,Gamma |- refl : T:=:T,proof(reflexivity)) :-
+type_system(_,Gamma |- refl : (T:=:T),proof(reflexivity)) :-
     !.
 
 type_system(Strategy,Gamma |- subst_by(A,B) : TA,proof(subst_by,LOG1,RED,LOG2)) :-
     member(Strategy,check::infer_type::nil),
-    type_system(Gamma |- B : X:=:TB,LOG1),
+    type_system(Gamma |- B : (X:=:TB),LOG1),
     const0(X),
     beta(Gamma,TA[X := TB], TAB, RED),
     not(equals(TA,TAB)),
@@ -166,7 +166,7 @@ type_system(Strategy,Gamma |- subst_by(A,B) : TA,proof(subst_by,LOG1,RED,LOG2)) 
 
 type_system(Strategy,Gamma |- subst_by(A,B) : TA,proof(subst_by,LOG1,RED,LOG2)) :-
     member(Strategy,check::infer_type::nil),
-    type_system(Gamma |- B : TB:=:X,LOG1),
+    type_system(Gamma |- B : (TB:=:X),LOG1),
     const0(X),
     beta(Gamma,TA[X := TB], TAB, RED),
     not(equals(TA,TAB)),

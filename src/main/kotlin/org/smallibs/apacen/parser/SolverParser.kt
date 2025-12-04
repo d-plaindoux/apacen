@@ -14,7 +14,6 @@ import org.smallibs.apacen.data.Declaration.Fact
 import org.smallibs.apacen.data.Declaration.Rule
 import org.smallibs.apacen.data.Term
 import org.smallibs.apacen.data.Term.BinOp
-import org.smallibs.apacen.data.Term.Constructor
 import org.smallibs.apacen.data.Term.BinOpKind.ADD
 import org.smallibs.apacen.data.Term.BinOpKind.DIV
 import org.smallibs.apacen.data.Term.BinOpKind.GEN
@@ -22,6 +21,7 @@ import org.smallibs.apacen.data.Term.BinOpKind.MAX
 import org.smallibs.apacen.data.Term.BinOpKind.MIN
 import org.smallibs.apacen.data.Term.BinOpKind.MUL
 import org.smallibs.apacen.data.Term.BinOpKind.SUB
+import org.smallibs.apacen.data.Term.Constructor
 import org.smallibs.apacen.data.Term.NumberLiteral
 import org.smallibs.apacen.data.Term.StringLiteral
 import org.smallibs.apacen.data.Term.Variable
@@ -92,7 +92,7 @@ object SolverParser {
         )
 
     private fun special(): Parser<Char, Char> =
-        charIn('@', '&', ':', '|', '$', '+', '-', '*', '/', '%', '?', '>', '<', '=', '~', ';')
+        charIn('@', '&', ':', '|', '$', '+', '-', '*', '/', '%', '?', '>', '<', '=', '~', ';', '\\')
 
     private fun operator(vararg rejected: String): Parser<Char, String> =
         trace(

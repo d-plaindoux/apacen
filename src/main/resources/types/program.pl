@@ -165,10 +165,9 @@ display_proofs(K,proofs(P1,P2)) :-
         eval := (t => e =>
                 case(e,
                   e => subst_by(fst(e),snd(e)),
-                  e => subst_by(eval @ T @ fst(e),snd(e))
+                  e => eval @ t @ subst_by(fst(e),snd(e))
                 )
         ),
-        -- Here in eval expression T is like implicit type
         valid(Program, Proof, Diagnostic).
     ```
 }-

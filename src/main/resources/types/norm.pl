@@ -10,9 +10,9 @@ hypothesis((X : R1)::R2,((X : T1)::G) |- R3)    :- !,const0(X),term(R1,T1),hypot
 
 ascription(R1 : R2,E : T)                       :- !,term(R1,E),term(R2,T).
 ascription((X : R1) -> R2,((X : T1) -> E) : T2) :- !,const0(X),term(R1,T1),ascription(R2,E : T2).
-ascription(R1 -> R2,((_ : T1) -> E) : T2)       :- !,term(R1,T1),ascription(R2,E : T2).
+ascription(R1 -> R2,((A : T1) -> E) : T2)       :- !,term(R1,T1),ascription(R2,E : T2),anon(A).
 ascription((X : R1) * R,((X : T1) * E) : T2)    :- !,const0(X),term(R1,T1),ascription(R2,E : T2).
-ascription(R1 * R2,((_ : T1) * E) : T2)         :- !,term(R1,T1),ascription(R2,E : T2).
+ascription(R1 * R2,((A : T1) * E) : T2)         :- !,term(R1,T1),ascription(R2,E : T2),anon(A).
 ascription(X => R,(X => E) : T)                 :- !,const0(X),ascription(R,E : T).
 ascription(R1 @ R2,E : T)                       :- !,term(R1,E1),ascription(R2,E2 : T),leftAssoc(E1,E2,E).
 ascription(R1 | R2,(E1 | E2) : T)               :- !,term(R1,E1),ascription(R2,E2 : T).
@@ -32,9 +32,9 @@ term(E,E)                                       :- const0(E),!.
 term(E,E)                                       :- number(E),!.
 term(E,E)                                       :- string(E),!.
 term((X : R1) -> R2,(X : T) -> E)               :- !,const0(X),term(R1,T),term(R2,E).
-term(R1 -> R2,(_ : T1) -> E)                    :- !,term(R1,T1),term(R2,E).
+term(R1 -> R2,(A : T1) -> E)                    :- !,term(R1,T1),term(R2,E),anon(A).
 term((X : R1) * R2,(X : T) * E)                 :- !,const0(X),term(R1,T),term(R2,E).
-term(R1 * R2,(_ : T1) * E)                      :- !,term(R1,T1),term(R2,E).
+term(R1 * R2,(A : T1) * E)                      :- !,term(R1,T1),term(R2,E),anon(A).
 term(X => R,X => E)                             :- !,const0(X),term(R,E).
 term(R1 @ R2,E)                                 :- !,term(R1,E1),term(R2,E2),leftAssoc(E1,E2,E).
 term(R1 | R2,E1 | E2)                           :- !,term(R1,E1),term(R2,E2).

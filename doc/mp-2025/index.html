@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Programmation Logique</title>
+
+    <meta name="description" content="Programmation Logique">
+    <meta name="author" content="Didier Plaindoux">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/sky.css" id="theme">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="node_modules/reveal.js/plugin/highlight/monokai.css">
+</head>
+
+<body>
+
+<div class="reveal">
+
+    <div class="slides">
+        <section>
+            <h2> Un peu d'I.A. symbolique ? </h2>
+            <p> D. Plaindoux ~ @dplaindoux@functional.cafe</p>
+        </section>
+
+        <section>
+            <h3> Paradigmes principaux </h3>
+
+            <p class="fragment" style="font-size:smaller; text-align: left"><b>Impératif</b> <br> Séquence
+                d'instructions exécutées pour
+                modifier l'état</p>
+            <p class="fragment" style="font-size:smaller; text-align: left"><b>Objet</b> <br> Définition et interaction
+                de briques appelées
+                objets</p>
+            <p class="fragment" style="font-size:smaller; text-align: left"><b>Fonctionnel</b> <br> Considère le calcul
+                en tant
+                qu'évaluation de fonctions</p>
+            <p class="fragment" style="font-size:smaller; text-align: left"><b>Logique</b> <br> Exprimer les problèmes
+                sous forme de
+                prédicats</p>
+        </section>
+
+        <section>
+            <h3> Programmation Logique </h3>
+
+            <ul>
+                <li> Calcul des prédicats du premier ordre</li>
+                <li> Principe d'unification de termes</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3> Prédicats du premier ordre </h3>
+
+            <p class="fragment"> Système formel pour raisonner </p>
+
+            <pre class="fragment">
+
+  X &in; Variables, C &in; Constante, f &in; Symbole<sub>f</sub>
+  t ::= X | C | f(t1,...,tn)
+
+  P &in; Symbole<sub>P</sub>
+  e ::= &not;e | e1&and;e2 | e1&or;e2 | e1&#8658;e2 | P(t1,...,tn) | &forall;X.e | &exist;X.e
+            </pre>
+
+            <pre class="fragment"><code>
+            &forall;X.&forall;Y.parent(X,Y) &and; femme(X) &#8658; mere(X,Y)
+            </code></pre>
+        </section>
+
+        <section>
+            <h3> Principe d'unification de termes </h3>
+            <h5> Jacques Herbrand ~ 1930 </h5>
+
+            <p class="fragment"> Trouver une substitution <b>&sigma;</b> qui appliquée <br> à deux termes les rend
+                identiques
+            </p>
+            <p class="fragment"><code>2+X</code> &equest; <code>Y+1</code><span
+                    class="fragment">,<b> &sigma;</b> = <code>{X&rightarrow;1,Y&rightarrow;2}</code></span></p>
+            <p class="fragment"> Problème de la <b>Solution principale</b></p>
+        </section>
+
+        <section>
+            <h3><b>Pro</b>grammation <b>log</b>ique </h3>
+
+            <img height="300" src="images/A-Colmerauer_web-800x423.jpg" style="width: 250px; height: 250px; border-radius: 50%;
+                                    object-fit: cover; border: 10px solid black;">
+            <img height="300" src="images/Philippe_Roussel_informaticien.jpg" style="width: 250px; height: 250px; border-radius: 50%;
+                                    object-fit: cover; border: 0px solid aliceblue;">
+
+            <p> Alain Colmerauer & Philippe Roussel ~ 1972</p>
+        </section>
+
+        <section>
+            <h3> Physionomie des termes </h3>
+
+            <ul>
+                <li class="fragment"> Variables: <code>X</code></li>
+                <li class="fragment"> Entier: <code>1</code></li>
+                <li class="fragment"> Atome: <code>chien</code></li>
+                <li class="fragment"> Foncteur: <code>montant(1_000,euro)</code></li>
+            </ul>
+
+        </section>
+
+        <section>
+            <h3> Physionomie des clauses </h3>
+
+            <p> A ::= atome | foncteur </p>
+
+            <ul>
+                <li class="fragment"><code>A.</code> pour les faits ou assertions
+                <li class="fragment"><code>A0 :- A1, ..., An.</code> pour les règles</li>
+                <li class="fragment"> Un programme est une suite de clauses</li>
+            </ul>
+
+        </section>
+
+        <section>
+            <h3> Exemple </h3>
+
+            <pre class="fragment"><code lang="prolog">
+    femme(anne).
+    parent(anne, paul).
+    parent(anne, magali).
+
+    mere(X,Y) :- femme(X), parent(X,Y).
+            </code></pre>
+
+            <p class="fragment" style="font-size: x-large"><code>&forall;X</code>, <code>&forall;Y</code>, <code>mere(X,Y)</code>
+                est vrai si <code>parent(X,Y)</code> est vrai et <code>femme(X)</code> est vrai </p>
+
+            <pre class="fragment"><code lang="prolog">
+    ?- mere(anne,paul).
+            </code></pre>
+
+            <p class="fragment" style="font-size: x-large"><code>mere(anne,paul)</code> est-il vrai ? </p>
+        </section>
+
+        <section>
+            <h3> Exemple </h3>
+
+            <pre><code lang="prolog">
+    femme(anne).
+    parent(anne, paul).
+    parent(anne, magali).
+
+    mere(X,Y) :- femme(X), parent(X,Y).
+            </code></pre>
+
+            <p style="font-size: x-large"><code>&forall;X</code>, <code>&forall;Y</code>, <code>mere(X,Y)</code> est
+                vrai si <code>parent(X,Y)</code> est vrai et <code>femme(X)</code> est vrai </p>
+
+            <pre><code lang="prolog">
+    ?- mere(anne,P).
+            </code></pre>
+
+            <p style="font-size: x-large" class="fragment"><code>&exist;P</code>, <code>mere(anne,P)</code> est-il vrai
+                ? </p>
+        </section>
+
+        <section>
+            <h3> Physiologie </h3>
+
+            <p class="fragment"> Repose sur du <b>Don't know</b> non-determinism </p>
+
+            <ul class="fragment">
+                <li> Sélectionne une tête de prédicat par unification</li>
+                <li class="fragment"> Prouve le corps de la règle avec la substitution</li>
+            </ul>
+
+            <p class="fragment"> À chaque selection il y a un <b>point rebroussement</b></p>
+
+        </section>
+
+        <section>
+
+            <img width="600" src="images/arbre-solutions.png">
+
+        </section>
+
+        <section>
+            <h3> Cas de l'égalité </h3>
+
+            <pre><code lang="prolog" style="font-size: 1.5em">
+                equals(X,X).
+            </code></pre>
+
+            <pre class="fragment"><code lang="ocaml" style="font-size: 1.5em">
+     type (_,_) eq = Refl : ('a,'a) eq
+            </code> </pre>
+        </section>
+
+        <section>
+            <h3> Cas de la négation </h3>
+
+            <p class="fragment"> Ne repose pas sur l’hypothèse du monde clos</p>
+
+            <pre class="fragment"><code lang="prolog" style="font-size: 1.5em">
+         not(B) :- call(B), !, fail.
+
+         not(_).
+            </code></pre>
+
+            <p class="fragment"> Repose sur des constructions non logiques </p>
+
+            <pre class="fragment"><code lang="prolog" style="font-size: 1.5em">
+         ?- not(homme(X)).
+            </code></pre>
+
+            <p class="fragment"> Le but réussit, mais sans donner de valeur à <code>X</code></p>
+
+        </section>
+
+        <section>
+            <h3> Programmation logique par contraintes </h3>
+
+            <p class="fragment"> L'unification intègre un traitement plus complet des arbres et des listes, un
+                traitement numérique et un traitement de l'algèbre de Boole </p>
+        </section>
+
+        <section>
+            <h3> Apacen: Prolog étendu </h3>
+
+            <ul>
+                <li class="fragment"> Equations et Inéquations</li>
+                <li class="fragment"> Fonction arithmétiques (min, max, log ...)</li>
+                <li class="fragment"> Résolution par réécriture</li>
+            </ul>
+
+            <p class="fragment"> Alternative avec les <b>solveurs SMT</b></p>
+
+        </section>
+
+        <section>
+            <h3> Application au domaine de l'immobilier </h3>
+
+            <ul>
+                <li class="fragment"><a
+                        href="https://www.service-public.fr/particuliers/vosdroits/F34966/1?idFicheParent=F10871"
+                        target="service-public-gouv.fr">
+                    Prêt à taux zéro (PTZ ou PTZ+) <br> Achat d'un logement ancien
+                </a>
+                </li>
+
+                <li class="fragment">
+                    <a href="https://xymaths.fr/MathAppli/Taux-Remboursement-Interets-Pret-Immobilier/Principe-Calculs-Prets-gigognes-lissage.php">
+                        Prêts gigognes ou emboîtés/étagés
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section data-background-iframe="https://simureno.immofix.com" data-background-interactive="true">
+        </section>
+
+        <section>
+            <h3> Vérification de solutions </h3>
+
+            <p> Puis-je emprunter ? Question fermée ! </p>
+
+            <pre class="fragment"><code lang="prolog">
+  ?- monthlyInstalments(
+         loan(amount(200_000),rate(3.15)),
+         ecoPTZ(amount(50_000)),
+         ptz(amount(90_000)),
+         monthly(Instalments),cost(LoanCost),months(300)
+     ),
+     debt(family(5000),monthly(Instalments),debtPercent(25)).
+
+  No solution
+
+
+
+            </code> </pre>
+
+        </section>
+
+        <section>
+            <h3> Synthèse de solutions </h3>
+
+            <p> Comment négocier ? </p>
+
+            <pre><code lang="prolog">
+  ?- monthlyInstalments(
+         loan(amount(200_000),rate(3.15)),
+         ecoPTZ(amount(50_000)),
+         ptz(amount(90_000)),
+         monthly(Instalments),cost(LoanCost),months(300)
+     ),
+     debt(family(5000),monthly(Instalments),debtPercent(25)).
+
+
+
+
+
+            </code> </pre>
+
+        </section>
+
+        <section>
+            <h3> Synthèse de solutions </h3>
+
+            <p> Comment négocier ? Question ouverte ! </p>
+
+            <pre><code lang="prolog">
+  ?- monthlyInstalments(
+         loan(amount(200_000*X),rate(3.15)),
+         ecoPTZ(amount(50_000)),
+         ptz(amount(90_000)),
+         monthly(Instalments),cost(LoanCost),months(300)
+     ),
+     debt(family(5000),monthly(Instalments),debtPercent(25)).
+
+
+
+
+
+            </code> </pre>
+
+        </section>
+
+        <section>
+            <h3> Synthèse de solutions </h3>
+
+            <p> Comment négocier ? Question ouverte ! </p>
+
+            <pre><code lang="prolog">
+  ?- monthlyInstalments(
+         loan(amount(200_000*X),rate(3.15)),
+         ecoPTZ(amount(50_000)),
+         ptz(amount(90_000)),
+         monthly(Instalments),cost(LoanCost),months(300)
+     ),
+     debt(family(5000),monthly(Instalments),debtPercent(25)).
+
+  Solution <1>:
+  | X = 0.8000703416684796
+  | Instalments = 1250.0
+  | LoanCost = 74985.9316663041
+            </code> </pre>
+        </section>
+
+
+        <section>
+            <h3> Synthèse de solutions </h3>
+
+            <p> Comment négocier ? </p>
+
+            <pre><code lang="prolog">
+  ?- monthlyInstalments(
+         loan(amount(200_000),rate(3.15)),
+         ecoPTZ(amount(50_000)),
+         ptz(amount(90_000)),
+         monthly(Instalments),cost(LoanCost),months(300)
+     ),
+     debt(family(5000),monthly(Instalments),debtPercent(25)).
+
+
+
+
+
+            </code> </pre>
+        </section>
+
+        <section>
+            <h3> Synthèse de solutions </h3>
+
+            <p> Comment négocier ? Question ouverte ! </p>
+
+            <pre><code lang="prolog">
+  ?- monthlyInstalments(
+         loan(amount(200_000),rate(3.15)),
+         ecoPTZ(amount(50_000)),
+         ptz(amount(90_000)),
+         monthly(Instalments),cost(LoanCost),months(300)
+     ),
+     debt(family(5000*X),monthly(Instalments),debtPercent(25)).
+
+
+
+
+
+            </code> </pre>
+
+        </section>
+
+        <section>
+            <h3> Synthèse de solutions </h3>
+
+            <p> Comment négocier ? Question ouverte ! </p>
+
+            <pre><code lang="prolog">
+  ?- monthlyInstalments(
+         loan(amount(200_000),rate(3.15)),
+         ecoPTZ(amount(50_000)),
+         ptz(amount(90_000)),
+         monthly(Instalments),cost(LoanCost),months(300)
+     ),
+     debt(family(5000*X),monthly(Instalments),debtPercent(25)).
+
+  Solution <1>:
+  | Instalments = 1442.7521246925255
+  | LoanCost = 92825.63740775763
+  | X = 1.1542016997540203
+            </code> </pre>
+        </section>
+
+        <section>
+            <h3> Synthèse de solutions </h3>
+
+            <p> Quels profils pour une offre immobilière ? </p>
+
+            <pre><code lang="prolog">
+  ?- simulation(
+        in(price(200_000), area(150), location("Gratens")),
+        out(renovation(Renovation), esthetical(Esthetical),
+            ecoPTZ(EcoPTZAmount), ptz(PTZAmount),
+            salary(Salary), members(Members), incomes(Incomes),
+            installments(Instalments), loanCoast(LoanCost),
+            duration(Months), debts(Debt)
+        )
+     ).
+            </code></pre>
+
+            <p class="fragment"><b>Tinder de l'immobilier</b></p>
+        </section>
+
+        <section>
+
+            <h3> Appliqué à la compilation </h3>
+
+            <pre class="fragment">
+
+    Γ ⊢ A : (x:R) -> T2   Γ ⊢ B : R
+    --------------------------------
+    Γ ⊢ A B : T2[X:=B]
+            </pre>
+
+            <pre class="fragment"><code lang="prolog">
+  type_system(
+        Strategy,
+        Gamma |- (A @ B) : T1,
+        proof(abstraction,LOG1,LOG2,RED)
+    ) :-
+    member(Strategy,check::infer_type::nil),
+    !, -- green cut
+    type_system(Gamma |- A : (X:R) -> T2,LOG1),
+    type_system(Gamma |- B : R,LOG2),
+    beta(Gamma,T2[X:=B],T1,RED).
+            </code></pre>
+
+        </section>
+
+        <section>
+            <h3> Conclusion </h3>
+
+            <ul>
+                <li> Approche déclarative </li>
+                <li> Héritage et/ou synthèse </li>
+                <li> Parcours orienté par des valeurs </li>
+                <li> Permet de traiter des problèmes ouverts </li>
+            </ul>
+        </section>
+
+    </div>
+
+</div>
+
+<script src="node_modules/reveal.js/dist/reveal.js"></script>
+<script src="node_modules/reveal.js/plugin/zoom/zoom.js"></script>
+<script src="node_modules/reveal.js/plugin/notes/notes.js"></script>
+<script src="node_modules/reveal.js/plugin/search/search.js"></script>
+<script src="node_modules/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+
+<script lang="ts">
+    // Also available as an ES module, see:
+    // https://revealjs.com/initialization/
+    Reveal.initialize({
+        controls: false,
+        progress: false,
+        center: true,
+        hash: true,
+        transition: 'none',
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight]
+    });
+</script>
+
+</body>
+</html>
