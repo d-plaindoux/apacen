@@ -16,7 +16,7 @@
 
     <link rel="stylesheet" href="node_modules/reveal.js/dist/reset.css">
     <link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
-    <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/sky.css" id="theme">
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/dracula.css" id="theme">
 
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="node_modules/reveal.js/plugin/highlight/monokai.css">
@@ -25,7 +25,6 @@
 <body>
 
 <div class="reveal">
-
     <div class="slides">
         <section>
             <h2> Un peu d'I.A. symbolique ? </h2>
@@ -38,13 +37,16 @@
             <p class="fragment" style="font-size:smaller; text-align: left"><b>Impératif</b> <br> Séquence
                 d'instructions exécutées pour
                 modifier l'état</p>
-            <p class="fragment" style="font-size:smaller; text-align: left"><b>Objet</b> <br> Définition et interaction
+            <p class="fragment" style="font-size:smaller; text-align: left"><b>Objet</b> [Impératif] <br> Définition et
+                interaction
                 de briques appelées
                 objets</p>
-            <p class="fragment" style="font-size:smaller; text-align: left"><b>Fonctionnel</b> <br> Considère le calcul
+            <p class="fragment" style="font-size:smaller; text-align: left"><b>Fonctionnel</b> [Déclaratif] <br>
+                Considère le calcul
                 en tant
                 qu'évaluation de fonctions</p>
-            <p class="fragment" style="font-size:smaller; text-align: left"><b>Logique</b> <br> Exprimer les problèmes
+            <p class="fragment" style="font-size:smaller; text-align: left"><b>Logique</b> [Déclaratif] <br> Exprimer
+                les problèmes
                 sous forme de
                 prédicats</p>
         </section>
@@ -53,33 +55,36 @@
             <h3> Programmation Logique </h3>
 
             <ul>
-                <li> Calcul des prédicats du premier ordre</li>
-                <li> Principe d'unification de termes</li>
+                <li class="fragment"> Calcul des prédicats du premier ordre</li>
+                <li class="fragment"> Principe d'unification de termes</li>
             </ul>
         </section>
 
         <section>
-            <h3> Prédicats du premier ordre </h3>
+            <h3> Calcul des prédicats </h3>
 
-            <p class="fragment"> Système formel pour raisonner </p>
+            <p class="fragment"> Système formel pour raisonner par <b>Gottlob Frege</b></p>
 
             <pre class="fragment">
 
   X &in; Variables, C &in; Constante, f &in; Symbole<sub>f</sub>
   t ::= X | C | f(t1,...,tn)
+            </pre>
+
+            <pre class="fragment">
 
   P &in; Symbole<sub>P</sub>
   e ::= &not;e | e1&and;e2 | e1&or;e2 | e1&#8658;e2 | P(t1,...,tn) | &forall;X.e | &exist;X.e
             </pre>
 
             <pre class="fragment"><code>
-            &forall;X.&forall;Y.parent(X,Y) &and; femme(X) &#8658; mere(X,Y)
+            &forall;X.&exist;Y.parent(X,Y) &and; femme(X) &#8658; mere(X,Y)
             </code></pre>
         </section>
 
         <section>
             <h3> Principe d'unification de termes </h3>
-            <h5> Jacques Herbrand ~ 1930 </h5>
+            <p> <b>Jacques Herbrand</b> ~ 1930 </p>
 
             <p class="fragment"> Trouver une substitution <b>&sigma;</b> qui appliquée <br> à deux termes les rend
                 identiques
@@ -101,6 +106,15 @@
         </section>
 
         <section>
+            <h3><b>Pro</b>grammation <b>log</b>ique </h3>
+
+            <ul>
+                <li class="fragment"> Forme restreinte du calcul des prédicats</li>
+                <li class="fragment"> Principe d'unification de termes</li>
+            </ul>
+        </section>
+
+        <section>
             <h3> Physionomie des termes </h3>
 
             <ul>
@@ -115,13 +129,28 @@
         <section>
             <h3> Physionomie des clauses </h3>
 
-            <p> A ::= atome | foncteur </p>
-
             <ul>
+                <li class="fragment"> A: atome | foncteur</li>
                 <li class="fragment"><code>A.</code> pour les faits ou assertions
                 <li class="fragment"><code>A0 :- A1, ..., An.</code> pour les règles</li>
                 <li class="fragment"> Un programme est une suite de clauses</li>
             </ul>
+
+            <p class="fragment"> Calcul des Prédicats restreint aux <b> Clauses de Horn </b></p>
+
+        </section>
+
+        <section>
+            <h3> Physiologie </h3>
+
+            <p class="fragment"> Repose sur du <b>Don't know</b> non-determinism </p>
+
+            <ul class="fragment">
+                <li> Sélectionne une tête de prédicat par unification</li>
+                <li class="fragment"> Prouve le corps de la règle avec la substitution</li>
+            </ul>
+
+            <p class="fragment"> À chaque selection il y a un <b>point rebroussement</b></p>
 
         </section>
 
@@ -169,20 +198,6 @@
         </section>
 
         <section>
-            <h3> Physiologie </h3>
-
-            <p class="fragment"> Repose sur du <b>Don't know</b> non-determinism </p>
-
-            <ul class="fragment">
-                <li> Sélectionne une tête de prédicat par unification</li>
-                <li class="fragment"> Prouve le corps de la règle avec la substitution</li>
-            </ul>
-
-            <p class="fragment"> À chaque selection il y a un <b>point rebroussement</b></p>
-
-        </section>
-
-        <section>
 
             <img width="600" src="images/arbre-solutions.png">
 
@@ -191,10 +206,15 @@
         <section>
             <h3> Cas de l'égalité </h3>
 
-            <pre><code lang="prolog" style="font-size: 1.5em">
-                equals(X,X).
+            <div class="r-stack">
+            <pre class="fragment step-fade-in-then-out"><code lang="prolog" style="font-size: 1.5em">
+           equals(X,Y) :- X = Y.
             </code></pre>
 
+                <pre class="fragment"><code lang="prolog" style="font-size: 1.5em">
+                equals(X,X).
+            </code></pre>
+            </div>
             <pre class="fragment"><code lang="ocaml" style="font-size: 1.5em">
      type (_,_) eq = Refl : ('a,'a) eq
             </code> </pre>
@@ -203,15 +223,15 @@
         <section>
             <h3> Cas de la négation </h3>
 
-            <p class="fragment"> Ne repose pas sur l’hypothèse du monde clos</p>
+            <p class="fragment"> Pas d’hypothèse de <b>monde clos</b> (&not; monotone)</p>
 
             <pre class="fragment"><code lang="prolog" style="font-size: 1.5em">
-         not(B) :- call(B), !, fail.
+        not(B) :- call(B), !, fail.
 
-         not(_).
+        not(_).
             </code></pre>
 
-            <p class="fragment"> Repose sur des constructions non logiques </p>
+            <p class="fragment"> Repose sur des <b>constructions non logiques</b></p>
 
             <pre class="fragment"><code lang="prolog" style="font-size: 1.5em">
          ?- not(homme(X)).
@@ -224,8 +244,14 @@
         <section>
             <h3> Programmation logique par contraintes </h3>
 
-            <p class="fragment"> L'unification intègre un traitement plus complet des arbres et des listes, un
-                traitement numérique et un traitement de l'algèbre de Boole </p>
+            <div class="r-stack">
+                <p class="fragment fade-in-then-out"> L'unification intègre un traitement plus complet des arbres et des
+                    listes, un
+                    traitement numérique et un traitement de l'algèbre de Boole </p>
+                <p class="fragment fade-in-then-out"> L'unification intègre un traitement plus complet des arbres et des
+                    listes, un
+                    <b>traitement numérique</b> et un traitement de l'algèbre de Boole </p>
+            </div>
         </section>
 
         <section>
@@ -235,6 +261,7 @@
                 <li class="fragment"> Equations et Inéquations</li>
                 <li class="fragment"> Fonction arithmétiques (min, max, log ...)</li>
                 <li class="fragment"> Résolution par réécriture</li>
+                <li class="fragment"> 👷 en travaux ... </li>
             </ul>
 
             <p class="fragment"> Alternative avec les <b>solveurs SMT</b></p>
@@ -245,22 +272,26 @@
             <h3> Application au domaine de l'immobilier </h3>
 
             <ul>
-                <li class="fragment"><a
-                        href="https://www.service-public.fr/particuliers/vosdroits/F34966/1?idFicheParent=F10871"
-                        target="service-public-gouv.fr">
-                    Prêt à taux zéro (PTZ ou PTZ+) <br> Achat d'un logement ancien
-                </a>
+                <li class="fragment">
+                    <a href="https://www.service-public.fr/particuliers/vosdroits/F34966/1?idFicheParent=F10871"
+                       target="service-public-gouv.fr">
+                        Prêt à taux zéro (PTZ ou PTZ+) <br> Achat d'un logement ancien
+                    </a>
                 </li>
 
                 <li class="fragment">
-                    <a href="https://xymaths.fr/MathAppli/Taux-Remboursement-Interets-Pret-Immobilier/Principe-Calculs-Prets-gigognes-lissage.php">
+                    <a href="https://xymaths.fr/MathAppli/Taux-Remboursement-Interets-Pret-Immobilier/Principe-Calculs-Prets-gigognes-lissage.php"
+                       target="xymaths.fr">
                         Prêts gigognes ou emboîtés/étagés
                     </a>
                 </li>
             </ul>
         </section>
 
-        <section data-background-iframe="https://simureno.immofix.com" data-background-interactive="true">
+        <section>
+            <h3> Application au domaine de l'immobilier </h3>
+
+            <h4> <a href="https://simureno.immofix.com"> Simuréro d'Immofix </a> </h4>
         </section>
 
         <section>
@@ -347,28 +378,6 @@
   | X = 0.8000703416684796
   | Instalments = 1250.0
   | LoanCost = 74985.9316663041
-            </code> </pre>
-        </section>
-
-
-        <section>
-            <h3> Synthèse de solutions </h3>
-
-            <p> Comment négocier ? </p>
-
-            <pre><code lang="prolog">
-  ?- monthlyInstalments(
-         loan(amount(200_000),rate(3.15)),
-         ecoPTZ(amount(50_000)),
-         ptz(amount(90_000)),
-         monthly(Instalments),cost(LoanCost),months(300)
-     ),
-     debt(family(5000),monthly(Instalments),debtPercent(25)).
-
-
-
-
-
             </code> </pre>
         </section>
 
@@ -465,11 +474,16 @@
             <h3> Conclusion </h3>
 
             <ul>
-                <li> Approche déclarative </li>
-                <li> Héritage et/ou synthèse </li>
-                <li> Parcours orienté par des valeurs </li>
-                <li> Permet de traiter des problèmes ouverts </li>
+                <li class="fragment"> Approche déclarative</li>
+                <li class="fragment"> Héritage et/ou Synthèse de contexte</li>
+                <li class="fragment"> Parcours orienté par des valeurs</li>
+                <li class="fragment"> Permet de traiter des problèmes ouverts</li>
             </ul>
+        </section>
+
+        <section>
+            <h2> Un peu d'I.A. symbolique ! </h2>
+            <p> D. Plaindoux ~ @dplaindoux@functional.cafe</p>
         </section>
 
     </div>
