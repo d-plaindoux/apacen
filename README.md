@@ -3,7 +3,7 @@
 ## Prolog 
 
 The current Prolog kernel is an ad-hoc implementation in Kotlin. 
-It does not use research results like the Warren abstract machine.
+It does not use yet research results like the [Warren abstract machine](https://www.sri.com/wp-content/uploads/2021/12/641.pdf).
 
 ## Objectives
 
